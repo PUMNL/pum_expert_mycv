@@ -1,0 +1,9 @@
+name = PUM Expert My CV
+description = View and webforms for My CV of an expert
+core = 7.x
+package = PUM
+dependencies[] = civicrm (>=4.4)
+dependencies[] = webform_civicrm (>=4.5)
+dependencies[] = webform (>=4.0-beta1)
+dependencies[] = views
+dependencies[] = pum_civicrm_views
