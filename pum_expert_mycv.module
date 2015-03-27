@@ -31,3 +31,62 @@ function pum_expert_mycv_get_role_ids($roles) {
 
     return $rids;
 }
+
+function _pum_expert_mycv_get_groups() {
+  $session = CRM_Core_Session::singleton();
+  $groups = civicrm_api3('GroupContact', 'get', array('contact_id' => $session->get('userID')));
+  $output = '';
+  foreach($groups['values'] as $group) {
+    if (strlen($output)) {
+      $output .= ', ';
+    }
+    $output .= $group['title'];
+  }
+  return $output;
+}
+
+function _pum_expert_mycv_get_sector() {
+  $session = CRM_Core_Session::singleton();
+  $enhancedTags = pum_expert_my_cv_enhanced_tags::singleton();
+  $tag_id = $enhancedTags->get_sector_tag_id($session->get('userID'));
+  $output = '';
+  if ($tag_id) {
+    $output = civicrm_api3('Tag', 'getvalue', array('id' => $tag_id, 'return' => 'name'));
+  }
+  return $output;
+}
+
+function _pum_expert_mycv_get_areas_of_expertise() {
+  $session = CRM_Core_Session::singleton();
+  $enhancedTags = pum_expert_my_cv_enhanced_tags::singleton();
+  $tag_id = $enhancedTags->get_sector_tag_id($session->get('userID'));
+  $output = '';
+  if ($tag_id) {
+    $child_tags = civicrm_api3('Tag', 'get', array('parent_id' => $tag_id));
+    $contact_tags = civicrm_api3('EntityTag', 'get', array('entity_table' => 'civicrm_contact', 'entity_id' => $session->get('userID')));
+    $tags = array();
+    foreach($contact_tags['values'] as $contact_tag) {
+      $tags[] = $contact_tag['tag_id'];
+    }
+    foreach($child_tags['values'] as $child_tag) {
+      if (in_array($child_tag['id'], $tags)) {
+        if (strlen($output)) {
+          $output .= ', ';
+        }
+        $output .= $child_tag['name'];
+      }
+    }
+  }
+  return $output;
+}
+
+function _pum_expert_mycv_get_sector_coordinator() {
+  $session = CRM_Core_Session::singleton();
+  $enhancedTags = pum_expert_my_cv_enhanced_tags::singleton();
+  $contact_id = $enhancedTags->get_sector_coordinator_id($session->get('userID'));
+  $output = '';
+  if ($contact_id) {
+    $output = civicrm_api3('Contact', 'getvalue', array('id' => $contact_id, 'return' => 'display_name'));
+  }
+  return $output;
+}
