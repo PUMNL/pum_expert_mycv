@@ -5,18 +5,16 @@ function pum_expert_mycv_views_api() {
 }
 
 function pum_expert_mycv_views_default_views() {
-    $files = file_scan_directory(drupal_get_path('module', 'pum_expert_mycv'). '/views', '/.inc/');
-    foreach ($files as $filepath => $file) {
-        try {
-            require $filepath;
-            if (isset($view)) {
-                $views[$view->name] = $view;
-            }
-        } catch (Exception $e) {
-            //do nothing
-        }
+  $files = file_scan_directory(drupal_get_path('module', 'pum_expert_mycv'). '/views', '/.inc/');
+  $views = array();
+  civicrm_initialize();
+  foreach ($files as $filepath => $file) {
+    require $filepath;
+    if (isset($view)) {
+      $views[$view->name] = $view;
     }
-    return $views;
+  }
+  return $views;
 }
 
 function pum_expert_mycv_get_role_ids($roles) {
