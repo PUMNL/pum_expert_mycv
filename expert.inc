@@ -64,7 +64,7 @@ function expert_cv_submit($form, &$form_state) {
     pum_expert_mycv_civi_save_workhistory($contact['id'], $form_state['storedvalues'][2], $form_state['num_workhistory']);
 
     drupal_set_message(t('Your CV is successfully updated'));
-    $form_state['redirect'] = 'portal';
+    $form_state['redirect'] = 'expert/my-cv';
   }
 }
 

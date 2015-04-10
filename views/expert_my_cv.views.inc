@@ -65,7 +65,7 @@ $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
 $handler->display->display_options['fields']['nothing']['label'] = '';
 $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Edit my CV';
 $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-$handler->display->display_options['fields']['nothing']['alter']['path'] = 'expert/my-cv/edit';
+$handler->display->display_options['fields']['nothing']['alter']['path'] = 'expert/my-cv-edit';
 $handler->display->display_options['fields']['nothing']['alter']['absolute'] = TRUE;
 $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
 /* Field: Global: PHP */
@@ -226,7 +226,7 @@ $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
 $handler->display->display_options['fields']['nothing_1']['label'] = '';
 $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Edit my CV';
 $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
-$handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'expert/my-cv/edit';
+$handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'expert/my-cv-edit';
 $handler->display->display_options['fields']['nothing_1']['alter']['absolute'] = TRUE;
 $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
 /* Filter criterion: User: Current */
