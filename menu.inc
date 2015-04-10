@@ -11,6 +11,7 @@ function pum_expert_mycv_menu() {
     'page arguments' => array('candidate_expert_cv', 3), //put the name of the form here
     'access callback' => '_pum_expert_mycv_user_has_role',
     'access arguments' => array(array('Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'menu_name' => 'navigation',
   );
   return $items;
 }

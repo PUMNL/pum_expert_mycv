@@ -6,6 +6,68 @@ function pum_expert_mycv_views_api() {
     return array('api' => 3.0);
 }
 
+/**
+ * Implementation of hook_fapi_validation_rules
+ */
+function pum_expert_mycv_fapi_validation_rules() {
+  return array(
+    'phone_validation' => array(
+      'callback' => 'pum_expert_mycv_phone_validation',
+      'error_msg' => 'Invalid phone number %field'
+    ),
+  );
+}
+
+function pum_expert_mycv_phone_validation($value) {
+  if (preg_match('/^\+?([-\.\s]|[0-9])*(\(?[0-9]*\)?|[0-9]*)([-\.\s]|[0-9])*$/', $value)) {
+    return true;
+  }
+  return false;
+}
+
+function _pum_expert_cv_form_date_value($value) {
+  $date = new DateTime($value);
+  return array(
+    'day' => (int) $date->format('d'),
+    'month' => (int) $date->format('m'),
+    'year' => (int) $date->format('Y'),
+  );
+}
+
+function _pum_expert_cv_form_date_submitted_value($value) {
+  $date = new DateTime();
+  $date->setDate($value['year'],$value['month'],$value['day']);
+  return $date->format('Ymd');
+}
+
+function _pum_expert_cv_form_pre_render_date(&$element)
+{
+  // Don't put empty values if a date has already been set
+  if (!empty($element['#default_value'])) {
+    $date = new DateTime();
+    $today = clone $date;
+    $date->setDate($element['#default_value']['year'],$element['#default_value']['month'],$element['#default_value']['day']);
+    if ($date != $today) {
+      return $element;
+    }
+  }
+
+  // Loop through each field, add empty option and unset value
+  foreach (array('year', 'month', 'day') as $field) {
+    if (!isset($element[$field])) {
+      continue;
+    }
+
+    unset($element[$field]['#value']);
+    $element[$field]['#default_value'] = '0';
+    $element[$field]['#options'] = array(
+        '0' => '',
+      ) + $element[$field]['#options'];
+  }
+
+  return $element;
+}
+
 function pum_expert_mycv_views_default_views() {
   $files = file_scan_directory(drupal_get_path('module', 'pum_expert_mycv'). '/views', '/.inc/');
   $views = array();
