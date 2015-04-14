@@ -68,13 +68,15 @@ function candidate_expert_cv_submit($form, &$form_state) {
     $contact['middle_name'] = $form_state['storedvalues'][0]['middle_name'];
     $contact['last_name'] = $form_state['storedvalues'][0]['last_name'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Additional_Data::Initials')] = $form_state['storedvalues'][0]['initials'];
+    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Additional_Data::City_of_Birth')] = $form_state['storedvalues'][0]['city_of_birth'];
+    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Additional_Data::Country_of_Birth')] = $form_state['storedvalues'][0]['country_of_birth'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Nationality::Nationality')] = $form_state['storedvalues'][0]['nationality'];
 
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Name')] = $form_state['storedvalues'][0]['passport_first_name'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Name_Last_Name')] = $form_state['storedvalues'][0]['passport_last_name'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Name_Partner_Last_Name')] = $form_state['storedvalues'][0]['passport_partner_name'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Number')] = $form_state['storedvalues'][0]['passport_number'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Valid_until')] = _pum_expert_cv_form_date_submitted_value($form_state['storedvalues'][0]['passport_valid_until']);
+    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Valid_until')] = _pum_expert_cv_form_date_submitted_string_value($form_state['storedvalues'][0]['passport_valid_until']);
 
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('In_Case_of_Emergency_Contact::Relationship_with_contact')] = $form_state['storedvalues'][0]['ice_relationship'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('In_Case_of_Emergency_Contact::Other_relationship')] = $form_state['storedvalues'][0]['ice_other'];
@@ -107,8 +109,7 @@ function candidate_expert_cv_submit($form, &$form_state) {
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Bank_Information::Accountholder_country')] = $form_state['storedvalues'][1]['accountholder_country'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Bank_Information::Other_Bank_Information_Comments')] = $form_state['storedvalues'][1]['other_bank_information'];
 
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('expert_data::side_activities')] = $form_state['storedvalues'][1]['side_activities'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('expert_data::code_conduct')] = $form_state['storedvalues'][4]['code_of_conduct'];
+    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('expert_data::code_conduct')] = $form_state['storedvalues'][4]['code_of_conduct'] ? 'Yes' : '';
 
     civicrm_api3('Contact', 'create', $contact);
 
@@ -178,6 +179,28 @@ function candidate_expert_cv_submit($form, &$form_state) {
     //update work history
     pum_expert_mycv_civi_save_workhistory($contact['id'], $form_state['storedvalues'][3], $form_state['num_workhistory']);
 
+    //create activity in case and update case
+    $case_status_id = civicrm_api3('OptionGroup', 'getvalue', array('return' => 'id', 'name' => 'case_status'));
+    $current_status[] = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'Assess CV', 'option_group_id' => $case_status_id));
+    $current_status[] = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'Accepted', 'option_group_id' => $case_status_id));
+    $current_status[] = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'Fill Out PUM CV', 'option_group_id' => $case_status_id));
+    $current_status[] = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'Final Check Application', 'option_group_id' => $case_status_id));
+    $current_status[] = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'Interview', 'option_group_id' => $case_status_id));
+
+    $case_id = CRM_Core_DAO::singleValueQuery("SELECT civicrm_case.id from civicrm_case inner join civicrm_case_contact on civicrm_case.id = civicrm_case_contact.case_id where civicrm_case.status_id IN (".implode(", ", $current_status).") AND civicrm_case_contact.contact_id = %1", array(1 => array($contact['id'], 'Integer')));
+    if ($case_id) {
+      $new_status_id = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'Fill Out PUM CV', 'option_group_id' => $case_status_id));
+      $activity_type_id = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'Fill Out PUM CV', 'option_group_id' => 2));
+      $activity_params['case_id'] = $case_id;
+      $activity_params['subject'] = 'Expert PUM CV filled out';
+      $activity_params['status_id'] = 2; //completed
+      $activity_params['activity_type_id'] = $activity_type_id;
+      civicrm_api3('Activity', 'create', $activity_params);
+      $case_params['id'] = $case_id;
+      $case_params['status_id'] = $new_status_id;
+      civicrm_api3('Case', 'create', $case_params);
+    }
+
     drupal_set_message(t('Your CV is successfully updated'));
     $form_state['redirect'] = 'portal';
   }
@@ -246,7 +269,7 @@ function candidate_expert_cv_additional_details(&$form_state) {
   $form['medical_information']['health_insurance_country'] = array(
     '#type' => 'select',
     '#title' => t('Health Insurance Country'),
-    '#default_value' => $contact['Medical_Information::Health_Insurance_Country'],
+    '#default_value' => !empty($contact['Medical_Information::Health_Insurance_Country']) ? $contact['Medical_Information::Health_Insurance_Country'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
     '#states' => array (
       'visible' => array(
@@ -291,7 +314,7 @@ function candidate_expert_cv_additional_details(&$form_state) {
   $form['medical_information']['gp_country'] = array(
     '#type' => 'select',
     '#title' => t('General Practitioner Country '),
-    '#default_value' => $contact['Medical_Information::General_Practitioner_Country'],
+    '#default_value' => !empty($contact['Medical_Information::General_Practitioner_Country']) ? $contact['Medical_Information::General_Practitioner_Country'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
   );
 
@@ -352,7 +375,7 @@ function candidate_expert_cv_additional_details(&$form_state) {
   $form['foreign_bank_information']['bank_country'] = array(
     '#type' => 'select',
     '#title' => t('Bank Country ISO Code'),
-    '#default_value' => $contact['Bank_Information::Bank_Country_ISO_Code'],
+    '#default_value' => !empty($contact['Bank_Information::Bank_Country_ISO_Code']) ? $contact['Bank_Information::Bank_Country_ISO_Code'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
   );
 
@@ -377,7 +400,7 @@ function candidate_expert_cv_additional_details(&$form_state) {
   $form['foreign_bank_information']['accountholder_country'] = array(
     '#type' => 'select',
     '#title' => t('Accountholder country'),
-    '#default_value' => $contact['Bank_Information::Accountholder_country'],
+    '#default_value' => !empty($contact['Bank_Information::Accountholder_country']) ? $contact['Bank_Information::Accountholder_country'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
   );
 
@@ -385,15 +408,6 @@ function candidate_expert_cv_additional_details(&$form_state) {
     '#type' => 'textarea',
     '#title' => t('Other Bank Information/Comments'),
     '#default_value' => $contact['Bank_Information::Other_Bank_Information_Comments'],
-  );
-
-  $form['other']['#type'] = 'fieldset';
-  $form['other']['#title'] = t('Other information');
-
-  $form['other']['side_activities'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Professional affiliation and side activities '),
-    '#default_value' => $contact['expert_data::side_activities'],
   );
 
   return array('form' => $form, 'title' => t('Additional details'));
@@ -447,11 +461,17 @@ function candidate_expert_cv_contact_details(&$form_state) {
     '#title' => t('City'),
     '#default_value' => $contact['home_address']['city'],
   );
+  $countries = CRM_Core_PseudoConstant::country();
+  $benelux = array();
+  $benelux[1152] = $countries[1152]; //NL
+  $benelux[1082] = $countries[1082]; //DE
+  $benelux[1020] = $countries[1020]; //BE
+  $benelux[1126] = $countries[1126]; //LU
   $form['contact_information']['country_id'] = array(
     '#type' => 'select',
     '#title' => t('Country'),
-    '#default_value' => $contact['home_address']['country_id'],
-    '#options' => CRM_Core_PseudoConstant::country(),
+    '#default_value' => !empty($contact['home_address']['country_id']) ? $contact['home_address']['country_id'] : 1152,
+    '#options' => $benelux,
   );
 
   $form['contact_information']['phone'] = array(
@@ -514,17 +534,32 @@ function candidate_expert_cv_contact_details(&$form_state) {
   );
 
   $form['passport']['passport_valid_until'] = array(
-    '#type' => 'date',
+    '#type' => 'date_select',
+    '#date_format' => 'Y-m-d',
     '#title' => t('Passport Expiry Date'),
-    '#pre_render' => array('_pum_expert_cv_form_pre_render_date'),
-    '#default_value' => _pum_expert_cv_form_date_value($contact['Passport_Information::Passport_Valid_until']),
+    '#date_year_range' => '0:+10',
+    //'#pre_render' => array('_pum_expert_cv_form_pre_render_date'),
+    '#default_value' => _pum_expert_cv_form_date_string_value($contact['Passport_Information::Passport_Valid_until']),
+  );
+
+  $form['passport']['city_of_birth'] = array(
+    '#type' => 'textfield',
+    '#title' => t('City of birth'),
+    '#default_value' => $contact['Additional_Data::City_of_Birth'],
+  );
+
+  $form['passport']['country_of_birth'] = array(
+    '#type' => 'select',
+    '#title' => t('Country of birth'),
+    '#options' => CRM_Core_PseudoConstant::country(),
+    '#default_value' => !empty($contact['Additional_Data::Country_of_Birth']) ? $contact['Additional_Data::Country_of_Birth'] : 1152,
   );
 
   $form['passport']['nationality'] = array(
     '#type' => 'select',
     '#title' => t('Nationality'),
     '#options' => CRM_Core_OptionGroup::values('nationalities'),
-    '#default_value' => $contact['Nationality::Nationality'],
+    '#default_value' => !empty($contact['Nationality::Nationality']) ? $contact['Nationality::Nationality'] : 'Dutch',
   );
 
   $form['ice']['#type'] = 'fieldset';
@@ -533,7 +568,7 @@ function candidate_expert_cv_contact_details(&$form_state) {
   $form['ice']['ice_relationship'] = array(
     '#type' => 'select',
     '#title' => t('Relationship with contact'),
-    '#options' => CRM_Core_OptionGroup::values('relationship_with_contact_20141119151423'),
+    '#options' => array('' => t(' -- None --')) + CRM_Core_OptionGroup::values('relationship_with_contact_20141119151423'),
     '#default_value' => $contact['In_Case_of_Emergency_Contact::Relationship_with_contact'],
   );
 

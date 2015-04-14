@@ -25,6 +25,11 @@ function pum_expert_mycv_phone_validation($value) {
   return false;
 }
 
+function _pum_expert_cv_form_date_string_value($value) {
+  $date = new DateTime($value);
+  return $date->format('Y').'-' . $date->format('m').'-' . $date->format('d');
+}
+
 function _pum_expert_cv_form_date_value($value) {
   $date = new DateTime($value);
   return array(
@@ -32,6 +37,11 @@ function _pum_expert_cv_form_date_value($value) {
     'month' => (int) $date->format('m'),
     'year' => (int) $date->format('Y'),
   );
+}
+
+function _pum_expert_cv_form_date_submitted_string_value($value) {
+  $date = new DateTime($value);
+  return $date->format('Ymd');
 }
 
 function _pum_expert_cv_form_date_submitted_value($value) {

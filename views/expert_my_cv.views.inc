@@ -25,7 +25,7 @@ $view->disabled = FALSE; /* Edit this to true to make a default view disabled in
 
 /* Display: Master */
 $handler = $view->new_display('default', 'Master', 'default');
-$handler->display->display_options['title'] = 'My CV';
+$handler->display->display_options['title'] = 'CV';
 $handler->display->display_options['css_class'] = 'pum-list-view';
 $handler->display->display_options['use_more_always'] = FALSE;
 $handler->display->display_options['access']['type'] = 'role';
@@ -240,7 +240,8 @@ $handler->display->display_options['filters']['uid_current']['value'] = '1';
 $handler = $view->new_display('page', 'Page', 'page');
 $handler->display->display_options['path'] = 'expert/my-cv';
 $handler->display->display_options['menu']['type'] = 'normal';
-$handler->display->display_options['menu']['title'] = 'My CV';
+$handler->display->display_options['menu']['title'] = 'CV';
+$handler->display->display_options['menu']['name'] = 'menu-my-profile';
 $handler->display->display_options['menu']['weight'] = '0';
 $handler->display->display_options['menu']['context'] = 0;
 $handler->display->display_options['menu']['context_only_inline'] = 0;
