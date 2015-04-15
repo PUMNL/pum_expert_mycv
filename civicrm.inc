@@ -72,6 +72,7 @@ function pum_expert_mycv_get_civi_contact() {
   }
 
   //get address info
+  $home_address = array();
   $home_loc = civicrm_api3('LocationType', 'getvalue', array('return' => 'id', 'name' => 'Home'));
   try {
     $home_address = civicrm_api3('Address', 'getsingle', array(
@@ -79,12 +80,14 @@ function pum_expert_mycv_get_civi_contact() {
       'location_type_id' => $home_loc
     ));
   } catch (Exception $e) {
-    $home_address['id'] = false;
-    $home_address['street_address'] = '';
-    $home_address['postal_code'] = '';
-    $home_address['city'] = '';
-    $home_address['country_id'] = 1152; //netherlands by default
+    //do nothing
   }
+
+  $home_address['id'] = isset($home_address['id']) ? $home_address['id'] : false;
+  $home_address['street_address'] = isset($home_address['street_address']) ? $home_address['street_address'] : '';
+  $home_address['postal_code'] = isset($home_address['postal_code']) ? $home_address['postal_code'] : '';
+  $home_address['city'] = isset($home_address['city']) ? $home_address['city'] : '';
+  $home_address['country_id'] = isset($home_address['country_id']) && !empty($home_address['country_id']) ? $home_address['country_id'] : 1152; //netherlands by default
   $contact['home_address'] = $home_address;
 
   //get phone info
