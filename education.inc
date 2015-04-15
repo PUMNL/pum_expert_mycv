@@ -2,7 +2,7 @@
 
 require_once('civicrm.inc');
 
-function pum_expert_mycv_education_form(&$form_state) {
+function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
   $contact = pum_expert_mycv_get_civi_contact();
   $educations = pum_expert_mycv_get_civi_education($contact['id']);
 
@@ -15,12 +15,12 @@ function pum_expert_mycv_education_form(&$form_state) {
 
   $form['education_entries'] = array(
     '#type' => 'markup',
-    '#marpup' => '',
+    '#markup' => '',
     '#prefix' => '<div id="entry-fieldset-wrapper">',
     '#suffix' => '</div>',
   );
 
-  if (!empty($form_state['next'])) {
+  if (!empty($form_state['next']) && $rebuild) {
     $form_state['num_educations'] = count($educations) > 0 ? count($educations) : 1;
   }
 
@@ -127,6 +127,53 @@ function pum_expert_mycv_education_form(&$form_state) {
   );
 
   return array('form' => $form, 'title' => t('Education'));
+}
+
+function pum_expert_mycv_civi_save_education($contact_id, $data, $num_educations) {
+  $fields = array();
+  $group_info =  civicrm_api3('CustomGroup', 'getsingle', array('name' => 'Education'));
+  $custom_fields = civicrm_api3('CustomField', 'get', array('custom_group_id' => $group_info['id']));
+  foreach($custom_fields['values'] as $field) {
+    $fields[$field['name']] = 'custom_'.$field['id'];
+  }
+
+  $educations = pum_expert_mycv_get_civi_education($contact_id);
+  $education_params = array();
+  $educations_to_remove = array();
+  if ($num_educations < count($educations)) {
+    for($i=count($educations); $i > $num_educations; $i--) {
+      $educations_to_remove[] = $educations[$i-1]['id'];
+    }
+  }
+
+  $newId = -1;
+
+  for($i=0; $i < $num_educations; $i++) {
+    if (isset($educations[$i])) {
+      $key = $educations[$i]['id'];
+    } else {
+      $key = $newId;
+      $newId --;
+    }
+
+    $education_params[$fields['Name_of_Institution'].':'.$key] = $data['education_institution_name_'.$i];
+    $education_params[$fields['Field_of_study_major'].':'.$key] = $data['education_field_of_study_'.$i];
+    $education_params[$fields['City'].':'.$key] = $data['education_city_'.$i];
+    $education_params[$fields['Country'].':'.$key] = $data['education_country_'.$i];
+    $education_params[$fields['Education_level'].':'.$key] = $data['education_education_level_'.$i];
+    $education_params[$fields['Years_From'].':'.$key] = $data['education_years_from_'.$i];
+    $education_params[$fields['To'].':'.$key] = $data['education_to_'.$i];
+    $education_params[$fields['Diploma_Degree'].':'.$key] = $data['education_diploma_degree_'.$i];
+  }
+
+  if (count($education_params)) {
+    $education_params['entity_id'] = $contact_id;
+    civicrm_api3('CustomValue', 'create', $education_params);
+  }
+
+  if (count($educations_to_remove) > 0) {
+    CRM_Core_DAO::executeQuery("DELETE FROM `".$group_info['table_name']."` WHERE `id` IN (".implode(",", $educations_to_remove).")");
+  }
 }
 
 

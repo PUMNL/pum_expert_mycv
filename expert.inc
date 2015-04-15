@@ -13,7 +13,7 @@ function expert_cv($form, &$form_state) {
     $currstep = 0;
   }
   $form_state['step'] = $currstep;
-  $allsteps = expert_cv_get_forms($form_state);
+  $allsteps = expert_cv_get_forms($form_state, $currstep);
   $currform['title'] = array(
     '#type' => 'markup',
     '#markup' => '<h2>'.$allsteps[$currstep]['title'].' ('.($currstep+1).'/'.count($allsteps).')</h2>',
@@ -47,7 +47,7 @@ function expert_cv_previous($form, &$form_state) {
 
 function expert_cv_submit($form, &$form_state) {
   $form_state['storedvalues'][$form_state['step']] = $form_state['values'];
-  if($form_state['step'] + 1 != count(expert_cv_get_forms($form_state))) {
+  if($form_state['step'] + 1 != count(expert_cv_get_forms($form_state, $form_state['step']))) {
     $form_state['next'] = true;
     $form_state['rebuild'] = TRUE;
   }else {
@@ -68,16 +68,15 @@ function expert_cv_submit($form, &$form_state) {
   }
 }
 
-function expert_cv_get_forms(&$form_state) {
-  return array(
-    expert_cv_additional_details($form_state),
-    pum_expert_mycv_education_form($form_state),
-    pum_expert_mycv_workhistory_form($form_state),
-  );
+function expert_cv_get_forms(&$form_state, $currstep) {
+  $return[0] = expert_cv_additional_details($form_state, $currstep == 0 ? true : false);
+  $return[1] = pum_expert_mycv_education_form($form_state, $currstep == 1 ? true : false);
+  $return[2] = pum_expert_mycv_workhistory_form($form_state, $currstep == 2 ? true : false);
+  return $return;
 }
 
 
-function expert_cv_additional_details(&$form_state) {
+function expert_cv_additional_details(&$form_state, $rebuild) {
   $contact = pum_expert_mycv_get_civi_contact();
   $form = array();
 

@@ -2,7 +2,7 @@
 
 require_once('civicrm.inc');
 
-function pum_expert_mycv_workhistory_form(&$form_state) {
+function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
   $contact = pum_expert_mycv_get_civi_contact();
   $workhistory = pum_expert_mycv_get_civi_workhistory($contact['id']);
 
@@ -24,7 +24,7 @@ function pum_expert_mycv_workhistory_form(&$form_state) {
     '#suffix' => '</div>',
   );
 
-  if (empty($form_state['num_workhistory']) || !empty($form_state['next'])) {
+  if (empty($form_state['num_workhistory']) || (!empty($form_state['next']) && $rebuild)) {
     $form_state['num_workhistory'] = count($workhistory) > 0 ? count($workhistory) : 1;
   }
 

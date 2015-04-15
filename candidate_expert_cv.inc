@@ -12,7 +12,8 @@ function candidate_expert_cv($form, &$form_state) {
     $currstep = 0;
   }
   $form_state['step'] = $currstep;
-  $allsteps = candidate_expert_cv_get_forms($form_state);
+
+  $allsteps = candidate_expert_cv_get_forms($form_state, $currstep);
   $currform['title'] = array(
     '#type' => 'markup',
     '#markup' => '<h2>'.$allsteps[$currstep]['title'].' ('.($currstep+1).'/'.count($allsteps).')</h2>',
@@ -42,7 +43,7 @@ function candidate_expert_cv($form, &$form_state) {
 }
 
 function candidate_expert_cv_validate_code_of_conduct($form, &$form_state) {
-  $allsteps = candidate_expert_cv_get_forms($form_state);
+  $allsteps = candidate_expert_cv_get_forms($form_state, $form_state['step']);
   if (($form_state['step']+1) == count($allsteps) && $form_state['values']['op'] == t('Submit') && empty($form_state['values']['code_of_conduct'])) {
     form_set_error('code_of_conduct', t('You didn\'t agree to the Code of Conduct'));
   }
@@ -55,7 +56,7 @@ function candidate_expert_cv_previous($form, &$form_state) {
 
 function candidate_expert_cv_submit($form, &$form_state) {
   $form_state['storedvalues'][$form_state['step']] = $form_state['values'];
-  if($form_state['step'] + 1 != count(candidate_expert_cv_get_forms($form_state))) {
+  if($form_state['step'] + 1 != count(candidate_expert_cv_get_forms($form_state, $form_state['step']))) {
     $form_state['next'] = true;
     $form_state['rebuild'] = TRUE;
   }else {
@@ -206,17 +207,17 @@ function candidate_expert_cv_submit($form, &$form_state) {
   }
 }
 
-function candidate_expert_cv_get_forms(&$form_state) {
-  return array(
-    candidate_expert_cv_contact_details($form_state),
-    candidate_expert_cv_additional_details($form_state),
-    pum_expert_mycv_education_form($form_state),
-    pum_expert_mycv_workhistory_form($form_state),
-    candidate_expert_cv_code_of_conduct($form_state),
-  );
+function candidate_expert_cv_get_forms(&$form_state, $currstep) {
+  $return[0] = candidate_expert_cv_contact_details($form_state, $currstep == 0 ? true : false);
+  $return[1] = candidate_expert_cv_additional_details($form_state, $currstep == 1 ? true : false);
+  $return[2] = pum_expert_mycv_education_form($form_state, $currstep == 2 ? true : false);
+  $return[3] = pum_expert_mycv_workhistory_form($form_state, $currstep == 3 ? true : false);
+  $return[4] = candidate_expert_cv_code_of_conduct($form_state, $currstep == 4 ? true : false);
+
+  return $return;
 }
 
-function candidate_expert_cv_code_of_conduct(&$form_state) {
+function candidate_expert_cv_code_of_conduct(&$form_state, $rebuild=false) {
   $contact = pum_expert_mycv_get_civi_contact();
   $form = array();
 
@@ -241,7 +242,7 @@ function candidate_expert_cv_code_of_conduct(&$form_state) {
   return array('form' => $form, 'title' => t('Code of conduct'));
 }
 
-function candidate_expert_cv_additional_details(&$form_state) {
+function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $contact = pum_expert_mycv_get_civi_contact();
   $form = array();
   $form['medical_information']['#type'] = 'fieldset';
@@ -413,7 +414,7 @@ function candidate_expert_cv_additional_details(&$form_state) {
   return array('form' => $form, 'title' => t('Additional details'));
 }
 
-function candidate_expert_cv_contact_details(&$form_state) {
+function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
   $contact = pum_expert_mycv_get_civi_contact();
 
   $form['contact_information']['#type'] = 'fieldset';
