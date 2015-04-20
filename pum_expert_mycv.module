@@ -26,6 +26,9 @@ function pum_expert_mycv_phone_validation($value) {
 }
 
 function _pum_expert_cv_form_date_string_value($value) {
+  if (empty($value)) {
+    return '';
+  }
   $date = new DateTime($value);
   return $date->format('Y').'-' . $date->format('m').'-' . $date->format('d');
 }
