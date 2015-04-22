@@ -89,12 +89,6 @@ function candidate_expert_cv_submit($form, &$form_state) {
 
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::Health_Insurance_Company')] = $form_state['storedvalues'][1]['health_insurance_company'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::Health_Insurance_Number')] = $form_state['storedvalues'][1]['health_insurance_number'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::General_Practitioner_Name')] = $form_state['storedvalues'][1]['gp_name'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::General_Practitioner_Address')] = $form_state['storedvalues'][1]['gp_address'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::General_Practitioner_Phone_Number')] = $form_state['storedvalues'][1]['gp_phone'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::General_Practitioner_Postal_Code')] = $form_state['storedvalues'][1]['gp_postalcode'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::General_Practitioner_City')] = $form_state['storedvalues'][1]['gp_city'];
-    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::General_Practitioner_Country')] = $form_state['storedvalues'][1]['gp_country'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Medical_Information::Health_Insurance_Country')] = $form_state['storedvalues'][1]['health_insurance_country'];
 
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Bank_Information::Bank_Account_Number')] = $form_state['storedvalues'][1]['bank_account_number'];
@@ -277,46 +271,6 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
         ':input[name="foreign_health_insurance"]' => array('value' => 'yes'),
       ),
     )
-  );
-
-  $form['medical_information']['gp_name'] = array(
-    '#type' => 'textfield',
-    '#title' => t('General Practitioner Name'),
-    '#default_value' => $contact['Medical_Information::General_Practitioner_Name'],
-  );
-
-  $form['medical_information']['gp_phone'] = array(
-    '#type' => 'textfield',
-    '#title' => t('General Practitioner Phone number'),
-    '#default_value' => $contact['Medical_Information::General_Practitioner_Phone_Number'],
-    '#rules' => array(
-      'phone_validation',
-    )
-  );
-
-  $form['medical_information']['gp_address'] = array(
-    '#type' => 'textfield',
-    '#title' => t('General Practitioner Address'),
-    '#default_value' => $contact['Medical_Information::General_Practitioner_Address'],
-  );
-
-  $form['medical_information']['gp_postalcode'] = array(
-    '#type' => 'textfield',
-    '#title' => t('General Practitioner Postal code'),
-    '#default_value' => $contact['Medical_Information::General_Practitioner_Postal_Code'],
-  );
-
-  $form['medical_information']['gp_city'] = array(
-    '#type' => 'textfield',
-    '#title' => t('General Practitioner City'),
-    '#default_value' => $contact['Medical_Information::General_Practitioner_City'],
-  );
-
-  $form['medical_information']['gp_country'] = array(
-    '#type' => 'select',
-    '#title' => t('General Practitioner Country '),
-    '#default_value' => !empty($contact['Medical_Information::General_Practitioner_Country']) ? $contact['Medical_Information::General_Practitioner_Country'] : 1152,
-    '#options' => CRM_Core_PseudoConstant::country(),
   );
 
   $form['bank_information']['#type'] = 'fieldset';

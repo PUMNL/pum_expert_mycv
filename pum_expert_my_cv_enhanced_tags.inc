@@ -70,6 +70,18 @@ class pum_expert_my_cv_enhanced_tags {
       return $sector_tag_id;
     }
 
+    public function get_areas_of_expertise_tag_ids($contact_id) {
+      $areas_of_expertises = array();
+      $contact_tags = $this->get_contact_tags($contact_id);
+      foreach ($contact_tags as $contact_tag) {
+        $tag = civicrm_api3('Tag', 'getsingle', array('id' => $contact_tag['tag_id']));
+        if ($this->is_sector_tag($tag['parent_id']) == TRUE) {
+          $areas_of_expertises[$tag['id']] = $tag;
+        }
+      }
+      return $areas_of_expertises;
+    }
+
     /**
      * Function to get the coordinator for a tag
      * 
