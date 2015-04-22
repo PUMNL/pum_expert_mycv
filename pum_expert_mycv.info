@@ -7,6 +7,7 @@ dependencies[] = webform_civicrm (>=4.5)
 dependencies[] = webform (>=4.0-beta1)
 dependencies[] = views
 dependencies[] = date
+dependencies[] = date_popup
 dependencies[] = pum_civicrm_views
 dependencies[] = fapi_validation
 

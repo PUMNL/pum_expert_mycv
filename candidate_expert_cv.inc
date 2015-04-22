@@ -246,12 +246,14 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Health insurance company'),
     '#default_value' => $contact['Medical_Information::Health_Insurance_Company'],
+    '#required' => true,
   );
 
   $form['medical_information']['health_insurance_number'] = array(
     '#type' => 'textfield',
     '#title' => t('Health insurance number'),
     '#default_value' => $contact['Medical_Information::Health_Insurance_Number'],
+    '#required' => true,
   );
 
   $form['medical_information']['foreign_health_insurance'] = array(
@@ -280,24 +282,28 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Bank account number'),
     '#default_value' => $contact['Bank_Information::Bank_Account_Number'],
+    '#required' => true,
   );
 
   $form['bank_information']['iban_number'] = array(
     '#type' => 'textfield',
     '#title' => t('IBAN number'),
     '#default_value' => $contact['Bank_Information::IBAN_nummer'],
+    '#required' => true,
   );
 
   $form['bank_information']['bic'] = array(
     '#type' => 'textfield',
     '#title' => t('BIC / Swift code'),
     '#default_value' => $contact['Bank_Information::BIC_Swiftcode'],
+    '#required' => true,
   );
 
   $form['bank_information']['accountholder_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Accountholder name'),
     '#default_value' => $contact['Bank_Information::Accountholder_name'],
+    '#required' => true,
   );
 
   $form['bank_information']['foreign_bank'] = array(
@@ -378,43 +384,51 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#title' => t('Prefix'),
     '#options' => array('' => t('- None -')) + CRM_Core_OptionGroup::values('individual_prefix'),
     '#default_value' => $contact['prefix_id'],
+    '#required' => true,
   );
   $form['contact_information']['first_name'] = array(
     '#type' => 'textfield',
     '#title' => t('First name'),
     '#default_value' => $contact['first_name'],
+    '#required' => true,
   );
   $form['contact_information']['middle_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Middle name'),
     '#default_value' => $contact['middle_name'],
+    '#required' => true,
   );
   $form['contact_information']['last_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Last name'),
     '#default_value' => $contact['last_name'],
+    '#required' => true,
   );
 
   $form['contact_information']['initials'] = array(
     '#type' => 'textfield',
     '#title' => t('Initials'),
     '#default_value' => $contact['Additional_Data::Initials'],
+    '#required' => true,
   );
 
   $form['contact_information']['street_address'] = array(
     '#type' => 'textfield',
     '#title' => t('Address'),
     '#default_value' => $contact['home_address']['street_address'],
+    '#required' => true,
   );
   $form['contact_information']['postal_code'] = array(
     '#type' => 'textfield',
     '#title' => t('Postal code'),
     '#default_value' => $contact['home_address']['postal_code'],
+    '#required' => true,
   );
   $form['contact_information']['city'] = array(
     '#type' => 'textfield',
     '#title' => t('City'),
     '#default_value' => $contact['home_address']['city'],
+    '#required' => true,
   );
   $countries = CRM_Core_PseudoConstant::country();
   $benelux = array();
@@ -427,6 +441,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#title' => t('Country'),
     '#default_value' => !empty($contact['home_address']['country_id']) ? $contact['home_address']['country_id'] : 1152,
     '#options' => $benelux,
+    '#required' => true,
   );
 
   $form['contact_information']['phone'] = array(
@@ -435,7 +450,8 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#default_value' => $contact['home_phone']['phone'],
     '#rules' => array(
       'phone_validation',
-    )
+    ),
+    '#required' => true,
   );
   $form['contact_information']['mobile'] = array(
     '#type' => 'textfield',
@@ -471,11 +487,13 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Passport name- First name(s)'),
     '#default_value' => $contact['Passport_Information::Passport_Name'],
+    '#required' => true,
   );
   $form['passport']['passport_last_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Passport name - Surname'),
     '#default_value' => $contact['Passport_Information::Passport_Name_Last_Name'],
+    '#required' => true,
   );
   $form['passport']['passport_partner_name'] = array(
     '#type' => 'textfield',
@@ -486,15 +504,16 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Passport number'),
     '#default_value' => $contact['Passport_Information::Passport_Number'],
+    '#required' => true,
   );
 
   $form['passport']['passport_valid_until'] = array(
-    '#type' => 'date_select',
+    '#type' => 'date_popup',
     '#date_format' => 'Y-m-d',
     '#title' => t('Passport Expiry Date'),
     '#date_year_range' => '0:+10',
-    //'#pre_render' => array('_pum_expert_cv_form_pre_render_date'),
     '#default_value' => _pum_expert_cv_form_date_string_value($contact['Passport_Information::Passport_Valid_until']),
+    '#required' => true,
   );
 
   $form['passport']['city_of_birth'] = array(
@@ -515,6 +534,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#title' => t('Nationality'),
     '#options' => CRM_Core_OptionGroup::values('nationalities'),
     '#default_value' => !empty($contact['Nationality::Nationality']) ? $contact['Nationality::Nationality'] : 'Dutch',
+    '#required' => true,
   );
 
   $form['ice']['#type'] = 'fieldset';
@@ -542,11 +562,13 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('First name'),
     '#default_value' => $contact['In_Case_of_Emergency_Contact::First_name_contact'],
+    '#required' => true,
   );
   $form['ice']['ice_last_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Last name'),
     '#default_value' => $contact['In_Case_of_Emergency_Contact::Last_name_contact'],
+    '#required' => true,
   );
   $form['ice']['ice_phone_1'] = array(
     '#type' => 'textfield',
@@ -555,6 +577,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
       'phone_validation',
     ),
     '#default_value' => $contact['In_Case_of_Emergency_Contact::Phone_number_1'],
+    '#required' => true,
   );
   $form['ice']['ice_phone_2'] = array(
     '#type' => 'textfield',
@@ -571,6 +594,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
       'email',
     ),
     '#default_value' => $contact['In_Case_of_Emergency_Contact::Email_Address'],
+    '#required' => true,
   );
 
   return array('form' => $form, 'title' => t('Candidate expert'));
