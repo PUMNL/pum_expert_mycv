@@ -469,7 +469,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
 
   $form['passport']['passport_first_name'] = array(
     '#type' => 'textfield',
-    '#title' => t('First name'),
+    '#title' => t('Passport name- First name(s)'),
     '#default_value' => $contact['Passport_Information::Passport_Name'],
   );
   $form['passport']['passport_last_name'] = array(
