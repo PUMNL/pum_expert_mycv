@@ -396,7 +396,6 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Middle name'),
     '#default_value' => $contact['middle_name'],
-    '#required' => true,
   );
   $form['contact_information']['last_name'] = array(
     '#type' => 'textfield',
