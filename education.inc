@@ -44,18 +44,21 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
       '#type' => 'textfield',
       '#title' => t('Name of Institution'),
       '#default_value' => isset($educations[$i]['Name_of_Institution']) && !$addMorePressed ? $educations[$i]['Name_of_Institution'] : '',
+      '#required' => true,
     );
 
     $form['education_entries']['education']['education_'.$i]['education_field_of_study_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('Field of study/major'),
       '#default_value' => isset($educations[$i]['Field_of_study_major']) && !$addMorePressed ? $educations[$i]['Field_of_study_major'] : '',
+      '#required' => true,
     );
 
     $form['education_entries']['education']['education_'.$i]['education_city_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('City'),
       '#default_value' => isset($educations[$i]['City']) && !$addMorePressed ? $educations[$i]['City'] : '',
+      '#required' => true,
     );
 
     $form['education_entries']['education']['education_'.$i]['education_country_'.$i] = array(
@@ -63,6 +66,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
       '#title' => t('Country'),
       '#default_value' => !empty($educations[$i]['Country']) && !$addMorePressed ? $educations[$i]['Country'] : '1152',
       '#options' => CRM_Core_PseudoConstant::country(),
+      '#required' => true,
     );
 
     $form['education_entries']['education']['education_'.$i]['education_education_level_'.$i] = array(
@@ -70,6 +74,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
       '#title' => t('Education level'),
       '#default_value' => isset($educations[$i]['Education_level']) && !$addMorePressed ? $educations[$i]['Education_level'] : '',
       '#options' => array('' => t('- None -')) + CRM_Core_OptionGroup::values('education_level_20140825212618'),
+      '#required' => true,
     );
 
     $form['education_entries']['education']['education_'.$i]['education_years_from_'.$i] = array(
@@ -80,6 +85,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
         'numeric',
         'length[4]',
       ),
+      '#required' => true,
     );
 
     $form['education_entries']['education']['education_'.$i]['education_to_'.$i] = array(
@@ -90,6 +96,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
         'numeric',
         'length[4]',
       ),
+      '#required' => true,
     );
 
     $form['education_entries']['education']['education_'.$i]['education_diploma_degree_'.$i] = array(
@@ -97,6 +104,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
       '#title' => t('Diploma/Degree'),
       '#default_value' => isset($educations[$i]['Diploma_Degree']) && !$addMorePressed ? $educations[$i]['Diploma_Degree'] : '',
       '#options' => array('' => t('- None -'), '1' => t('Yes'), '0' => t('No')),
+      '#required' => true,
     );
   }
 
@@ -113,6 +121,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
         'callback' => 'pum_expert_mycv_education_callback',
         'wrapper' => 'entry-fieldset-wrapper',
       ),
+      '#limit_validation_errors' => array(),
     );
   }
 
@@ -124,6 +133,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
       'callback' => 'pum_expert_mycv_education_callback',
       'wrapper' => 'entry-fieldset-wrapper',
     ),
+    '#limit_validation_errors' => array(),
   );
 
   return array('form' => $form, 'title' => t('Education'));

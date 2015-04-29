@@ -37,9 +37,45 @@ function candidate_expert_cv($form, &$form_state) {
 
   $form_state['next'] = false;
 
-  $currform['#validate'] = array('candidate_expert_cv_validate_code_of_conduct');
+  $currform['#validate'][] ='candidate_expert_cv_validate_code_of_conduct';
+  $currform['#validate'][] ='candidate_expert_cv_validate_foreign_insurance';
+  $currform['#validate'][] ='candidate_expert_cv_validate_foreign_bank';
 
   return $currform;
+}
+
+function candidate_expert_cv_validate_foreign_bank($form, &$form_state) {
+  if ($form_state['step'] == 1 && $form_state['values']['op'] == t('Next') && !empty($form_state['values']['foreign_bank']) && $form_state['values']['foreign_bank'] == 'yes') {
+    if (empty($form_state['values']['bank_name'])) {
+      form_set_error('bank_name','Bank name is required');
+    }
+    if (empty($form_state['values']['bank_city'])) {
+      form_set_error('bank_city','Bank city is required');
+    }
+    if (empty($form_state['values']['bank_country']) || $form_state['values']['bank_country'] == 1152) {
+      form_set_error('bank_country', t('Bank Country ISO Code is required'));
+    }
+    if (empty($form_state['values']['accountholder_address'])) {
+      form_set_error('accountholder_address','Accountholder address is required');
+    }
+    if (empty($form_state['values']['accountholder_postal_code'])) {
+      form_set_error('accountholder_postal_code','Accountholder postal code is required');
+    }
+    if (empty($form_state['values']['accountholder_city'])) {
+      form_set_error('accountholder_city','Accountholder City is required');
+    }
+    if (empty($form_state['values']['accountholder_country']) || $form_state['values']['accountholder_country'] == 1152) {
+      form_set_error('accountholder_country', t('Accountholder Country ISO Code is required'));
+    }
+  }
+}
+
+function candidate_expert_cv_validate_foreign_insurance($form, &$form_state) {
+  if ($form_state['step'] == 1 && $form_state['values']['op'] == t('Next') && !empty($form_state['values']['foreign_health_insurance']) && $form_state['values']['foreign_health_insurance'] == 'yes') {
+    if (empty($form_state['values']['health_insurance_country']) || $form_state['values']['health_insurance_country'] == 1152) {
+      form_set_error('health_insurance_country', t('Health insurance country is required'));
+    }
+  }
 }
 
 function candidate_expert_cv_validate_code_of_conduct($form, &$form_state) {
@@ -272,6 +308,9 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
       'visible' => array(
         ':input[name="foreign_health_insurance"]' => array('value' => 'yes'),
       ),
+      'required' => array(
+        ':input[name="foreign_health_insurance"]' => array('value' => 'yes'),
+      ),
     )
   );
 
@@ -325,12 +364,22 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Bank name'),
     '#default_value' => $contact['Bank_Information::Bank_Name'],
+    '#states' => array (
+      'required' => array(
+        ':input[name="foreign_bank"]' => array('value' => 'yes'),
+        ),
+    ),
   );
 
   $form['foreign_bank_information']['bank_city'] = array(
     '#type' => 'textfield',
     '#title' => t('Bank city'),
     '#default_value' => $contact['Bank_Information::Bank_City'],
+    '#states' => array (
+      'required' => array(
+        ':input[name="foreign_bank"]' => array('value' => 'yes'),
+      ),
+    ),
   );
 
   $form['foreign_bank_information']['bank_country'] = array(
@@ -338,24 +387,44 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
     '#title' => t('Bank Country ISO Code'),
     '#default_value' => !empty($contact['Bank_Information::Bank_Country_ISO_Code']) ? $contact['Bank_Information::Bank_Country_ISO_Code'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
+    '#states' => array (
+      'required' => array(
+        ':input[name="foreign_bank"]' => array('value' => 'yes'),
+      ),
+    ),
   );
 
   $form['foreign_bank_information']['accountholder_address'] = array(
     '#type' => 'textfield',
     '#title' => t('Accountholder address'),
     '#default_value' => $contact['Bank_Information::Accountholder_address'],
+    '#states' => array (
+      'required' => array(
+        ':input[name="foreign_bank"]' => array('value' => 'yes'),
+      ),
+    ),
   );
 
   $form['foreign_bank_information']['accountholder_postal_code'] = array(
     '#type' => 'textfield',
     '#title' => t('Accountholder postal code'),
     '#default_value' => $contact['Bank_Information::Accountholder_postal_code'],
+    '#states' => array (
+      'required' => array(
+        ':input[name="foreign_bank"]' => array('value' => 'yes'),
+      ),
+    ),
   );
 
   $form['foreign_bank_information']['accountholder_city'] = array(
     '#type' => 'textfield',
     '#title' => t('Accountholder city'),
     '#default_value' => $contact['Bank_Information::Accountholder_city'],
+    '#states' => array (
+      'required' => array(
+        ':input[name="foreign_bank"]' => array('value' => 'yes'),
+      ),
+    ),
   );
 
   $form['foreign_bank_information']['accountholder_country'] = array(
@@ -363,12 +432,18 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
     '#title' => t('Accountholder country'),
     '#default_value' => !empty($contact['Bank_Information::Accountholder_country']) ? $contact['Bank_Information::Accountholder_country'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
+    '#states' => array (
+      'required' => array(
+        ':input[name="foreign_bank"]' => array('value' => 'yes'),
+      ),
+    ),
   );
 
   $form['foreign_bank_information']['other_bank_information'] = array(
     '#type' => 'textarea',
     '#title' => t('Other Bank Information/Comments'),
     '#default_value' => $contact['Bank_Information::Other_Bank_Information_Comments'],
+
   );
 
   return array('form' => $form, 'title' => t('Additional details'));
@@ -396,7 +471,6 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Middle name'),
     '#default_value' => $contact['middle_name'],
-    '#required' => true,
   );
   $form['contact_information']['last_name'] = array(
     '#type' => 'textfield',

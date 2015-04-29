@@ -44,12 +44,14 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
       '#type' => 'textfield',
       '#title' => t('Name of organisation'),
       '#default_value' => isset($workhistory[$i]['Workhistory::Name_of_Organisation']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Name_of_Organisation'] : '',
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_city_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('City'),
       '#default_value' => isset($workhistory[$i]['Workhistory::City']) && !$addMorePressed ? $workhistory[$i]['Workhistory::City'] : '',
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_country_'.$i] = array(
@@ -57,6 +59,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
       '#title' => t('Country'),
       '#default_value' => !empty($workhistory[$i]['Workhistory::Country']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Country'] : '1152',
       '#options' => CRM_Core_PseudoConstant::country(),
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_years_from_'.$i] = array(
@@ -67,6 +70,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
         'numeric',
         'length[4]',
       ),
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_to_'.$i] = array(
@@ -77,30 +81,35 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
         'numeric',
         'length[4]',
       ),
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_job_title_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('Job title'),
       '#default_value' => isset($workhistory[$i]['Workhistory::Job_Title']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Job_Title'] : '',
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_description_'.$i] = array(
       '#type' => 'textarea',
       '#title' => t('Description'),
       '#default_value' => isset($workhistory[$i]['Workhistory::Description']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Description'] : '',
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_competences_'.$i] = array(
       '#type' => 'textarea',
       '#title' => t('Compentences used in this job'),
       '#default_value' => isset($workhistory[$i]['Workhistory::Competences_used_in_this_job']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Competences_used_in_this_job'] : '',
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_responsibilities_'.$i] = array(
       '#type' => 'textarea',
       '#title' => t('Responsibilities'),
       '#default_value' => isset($workhistory[$i]['Workhistory::Responsibilities']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Responsibilities'] : '',
+      '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_countries_visited_'.$i] = array(
@@ -109,6 +118,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
       '#multiple' => true,
       '#default_value' => !empty($workhistory[$i]['Workhistory::Countries_visited_in_relation_to_the_job']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Countries_visited_in_relation_to_the_job'] : '1152',
       '#options' => CRM_Core_PseudoConstant::country(),
+      '#required' => true,
     );
   }
 
@@ -125,6 +135,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
         'callback' => 'pum_expert_mycv_workhistory_callback',
         'wrapper' => 'entry-fieldset-wrapper',
       ),
+      '#limit_validation_errors' => array(),
     );
   }
 
@@ -136,6 +147,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
       'callback' => 'pum_expert_mycv_workhistory_callback',
       'wrapper' => 'entry-fieldset-wrapper',
     ),
+    '#limit_validation_errors' => array(),
   );
 
   return array('form' => $form, 'title' => t('Workhistory'));
