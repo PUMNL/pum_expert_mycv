@@ -12,7 +12,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
 
   $form['workhistory_info']['#type'] = 'fieldset';
   $form['workhistory_info']['#title'] = t('Workhistory');
-  $form['workhistory_info']['#field_suffix'] = 'Please provide us with your relevant work experience details starting with your most recent work experience and working backwards in chronological order. For each additional work experience entry you wish to submit, click the box at the bottom of the form. The maximum number of work experience entries you can list is 10.';
+  $form['workhistory_info']['#description'] = 'Please provide us with your relevant work experience details starting with your most recent work experience and working backwards in chronological order. For each additional work experience entry you wish to submit, click the box at the bottom of the form. The maximum number of work experience entries you can list is 10.';
   $form['workhistory_info']['info'] = array(
     '#type' => 'markup',
     '#markup' => t('Please provide us with your relevant work experience details. For each additional work experience you wish to submit, klick the box at the bottom of the form.'),

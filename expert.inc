@@ -47,6 +47,10 @@ function expert_cv($form, &$form_state) {
 function expert_cv_previous($form, &$form_state) {
   $form_state['step'] = $form_state['step'] - 2;
   $form_state['rebuild'] = TRUE;
+
+  $path = drupal_get_path('module', 'pum_portal_webform_help');
+  drupal_add_js($path . '/ppwh.js');
+  drupal_add_css($path . '/ppwh.css');
 }
 
 function expert_cv_submit($form, &$form_state) {
@@ -70,6 +74,10 @@ function expert_cv_submit($form, &$form_state) {
     drupal_set_message(t('Your CV is successfully updated'));
     $form_state['redirect'] = 'expert/my-cv';
   }
+
+  $path = drupal_get_path('module', 'pum_portal_webform_help');
+  drupal_add_js($path . '/ppwh.js');
+  drupal_add_css($path . '/ppwh.css');
 }
 
 function expert_cv_get_forms(&$form_state, $currstep) {

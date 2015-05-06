@@ -587,7 +587,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
 
   $form['passport']['#type'] = 'fieldset';
   $form['passport']['#title'] = t('Passport information');
-  $form['passport']['#field_suffix'] = 'In connection with booking tickets, we will need your full name as appearing in your passport.';
+  $form['passport']['#description'] = 'In connection with booking tickets, we will need your full name as appearing in your passport.';
 
   $form['passport']['passport_first_name'] = array(
     '#type' => 'textfield',
