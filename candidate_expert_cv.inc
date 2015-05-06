@@ -311,7 +311,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['medical_information']['health_insurance_country'] = array(
     '#type' => 'select',
     '#title' => t('Health Insurance Country'),
-    '#field_suffix' => 'If you have foreign health insurance, please specify the country. In the case of foreign health insurance, for each foreign journey on behalf of PUM, you will be required to take out travel insurance from your place of residence to the Netherlands.',
+    '#field_suffix' => '<p class="description">If you have foreign health insurance, please specify the country. In the case of foreign health insurance, for each foreign journey on behalf of PUM, you will be required to take out travel insurance from your place of residence to the Netherlands.</p>',
     '#default_value' => !empty($contact['Medical_Information::Health_Insurance_Country']) ? $contact['Medical_Information::Health_Insurance_Country'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
     '#states' => array (
@@ -532,7 +532,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
   $form['contact_information']['country_id'] = array(
     '#type' => 'select',
     '#title' => t('Country'),
-    '#field_suffix' => 'PUM only includes experts in its database who are resident in the Netherlands. In consultation with the sector coordinator and Head of HRM, exceptions may be made in specific cases, for border areas in Belgium and Germany.',
+    '#field_suffix' => '<p class="description">PUM only includes experts in its database who are resident in the Netherlands. In consultation with the sector coordinator and Head of HRM, exceptions may be made in specific cases, for border areas in Belgium and Germany.</p>',
     '#default_value' => !empty($contact['home_address']['country_id']) ? $contact['home_address']['country_id'] : 1152,
     '#options' => $benelux,
     '#required' => true,
@@ -542,7 +542,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Home phone number'),
     '#default_value' => $contact['home_phone']['phone'],
-    '#field_suffix' => '<code class="help">For example: +31 50 1234567 or +31 6 12345678</code>In case of no other telephone than your mobile phone, please enter your mobile phone number here',
+    '#field_suffix' => '<code class="help">For example: +31 50 1234567 or +31 6 12345678</code> <p class="description">In case of no other telephone than your mobile phone, please enter your mobile phone number here</p>',
     '#rules' => array(
       'phone_validation',
     ),
