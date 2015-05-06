@@ -37,6 +37,10 @@ function expert_cv($form, &$form_state) {
 
   $form_state['next'] = false;
 
+  $path = drupal_get_path('module', 'pum_portal_webform_help');
+  drupal_add_js($path . '/ppwh.js');
+  drupal_add_css($path . '/ppwh.css');
+
   return $currform;
 }
 

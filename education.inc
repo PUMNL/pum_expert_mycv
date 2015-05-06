@@ -8,7 +8,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
 
   $form['education_info']['#type'] = 'fieldset';
   $form['education_info']['#title'] = t('Education');
-  $form['education_info']['#description'] = 'Please provide us with your relevant education and training details, starting with oldest relevant education and finishing with the most recent. For each additional education or training entry you wish to submit, click the box at the bottom of the form. The maximum number of education entries you can list is 10.';
+  $form['education_info']['#field_suffix'] = 'Please provide us with your relevant education and training details, starting with oldest relevant education and finishing with the most recent. For each additional education or training entry you wish to submit, click the box at the bottom of the form. The maximum number of education entries you can list is 10.';
   $form['education_info']['info'] = array(
     '#type' => 'markup',
     '#markup' => t('Please provide us with your relevant education and training details. Start with your education after completion of secondary school. For each additional education or training you wish to submit, click the box at the bottom of the form.'),
@@ -81,7 +81,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
     $form['education_entries']['education']['education_'.$i]['education_years_from_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('Years from'),
-      '#description' => '<code class="help">Use the full year notation (example: 1980)</code>',
+      '#field_suffix' => '<code class="help">Use the full year notation (example: 1980)</code>',
       '#default_value' => isset($educations[$i]['Years_From']) && !$addMorePressed ? $educations[$i]['Years_From'] : '',
       '#rules' => array(
         'numeric',
@@ -93,7 +93,7 @@ function pum_expert_mycv_education_form(&$form_state, $rebuild=false) {
     $form['education_entries']['education']['education_'.$i]['education_to_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('Years to'),
-      '#description' => '<code class="help">Use the full year notation (example: 1980)</code>',
+      '#field_suffix' => '<code class="help">Use the full year notation (example: 1980)</code>',
       '#default_value' => isset($educations[$i]['To']) && !$addMorePressed ? $educations[$i]['To'] : '',
       '#rules' => array(
         'numeric',

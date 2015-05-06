@@ -41,6 +41,10 @@ function candidate_expert_cv($form, &$form_state) {
   $currform['#validate'][] ='candidate_expert_cv_validate_foreign_insurance';
   $currform['#validate'][] ='candidate_expert_cv_validate_foreign_bank';
 
+  $path = drupal_get_path('module', 'pum_portal_webform_help');
+  drupal_add_js($path . '/ppwh.js');
+  drupal_add_css($path . '/ppwh.css');
+
   return $currform;
 }
 
@@ -307,7 +311,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['medical_information']['health_insurance_country'] = array(
     '#type' => 'select',
     '#title' => t('Health Insurance Country'),
-    '#description' => 'If you have foreign health insurance, please specify the country. In the case of foreign health insurance, for each foreign journey on behalf of PUM, you will be required to take out travel insurance from your place of residence to the Netherlands.',
+    '#field_suffix' => 'If you have foreign health insurance, please specify the country. In the case of foreign health insurance, for each foreign journey on behalf of PUM, you will be required to take out travel insurance from your place of residence to the Netherlands.',
     '#default_value' => !empty($contact['Medical_Information::Health_Insurance_Country']) ? $contact['Medical_Information::Health_Insurance_Country'] : 1152,
     '#options' => CRM_Core_PseudoConstant::country(),
     '#states' => array (
@@ -326,7 +330,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['bank_information']['bank_account_number'] = array(
     '#type' => 'textfield',
     '#title' => t('Bank account number'),
-    '#description' => '<code class="help">Account number for the account holder in figures.</code>',
+    '#field_suffix' => '<code class="help">Account number for the account holder in figures.</code>',
     '#default_value' => $contact['Bank_Information::Bank_Account_Number'],
     '#required' => true,
   );
@@ -341,7 +345,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['bank_information']['bic'] = array(
     '#type' => 'textfield',
     '#title' => t('BIC / Swift code'),
-    '#description' => '<code class="help">always 11 numbers/figures. If the code consists of a smaller number, complete the code with the letter ‘X’, ‘XX’ or ‘XXX’ until you have reached 11 characters.</code>',
+    '#field_suffix' => '<code class="help">always 11 numbers/figures. If the code consists of a smaller number, complete the code with the letter ‘X’, ‘XX’ or ‘XXX’ until you have reached 11 characters.</code>',
     '#default_value' => $contact['Bank_Information::BIC_Swiftcode'],
     '#required' => true,
   );
@@ -349,7 +353,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['bank_information']['accountholder_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Accountholder name'),
-    '#description' => '<code class="help">The precise name of the account holder. This must be identical to the name known to the bank.</code>',
+    '#field_suffix' => '<code class="help">The precise name of the account holder. This must be identical to the name known to the bank.</code>',
     '#default_value' => $contact['Bank_Information::Accountholder_name'],
     '#required' => true,
   );
@@ -357,7 +361,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['bank_information']['foreign_bank'] = array(
     '#type' => 'select',
     '#title' => t('Do you have a foreign Bank Account'),
-    '#description' => '<code class="help">If No, please continue. If Yes, please complete the extra information fields concerning your foreign account.</code>',
+    '#field_suffix' => '<code class="help">If No, please continue. If Yes, please complete the extra information fields concerning your foreign account.</code>',
     '#options' => array('no' => t('No'), 'yes' => t('Yes')),
     '#default_value' => (!empty($contact['Bank_Information::Bank_Country_ISO_Code']) && $contact['Bank_Information::Bank_Country_ISO_Code'] != 1152) ? 'yes' : 'no',
   );
@@ -373,7 +377,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['foreign_bank_information']['bank_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Bank name'),
-    '#description' => '<code class="help">Name of the bank (max 50 characters, no new lines / line breaks permitted here) The bank name is mandatory for non-Dutch banks.</code>',
+    '#field_suffix' => '<code class="help">Name of the bank (max 50 characters, no new lines / line breaks permitted here) The bank name is mandatory for non-Dutch banks.</code>',
     '#default_value' => $contact['Bank_Information::Bank_Name'],
     '#states' => array (
       'required' => array(
@@ -386,7 +390,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Bank city'),
     '#default_value' => $contact['Bank_Information::Bank_City'],
-    '#description' => '<code class="help">City where the bank is located. (max 50 characters, no new lines / line breaks permitted here). The bank city is mandatory for non-Dutch banks.</code>',
+    '#field_suffix' => '<code class="help">City where the bank is located. (max 50 characters, no new lines / line breaks permitted here). The bank city is mandatory for non-Dutch banks.</code>',
     '#states' => array (
       'required' => array(
         ':input[name="foreign_bank"]' => array('value' => 'yes'),
@@ -454,7 +458,7 @@ function candidate_expert_cv_additional_details(&$form_state, $rebuild=false) {
   $form['foreign_bank_information']['other_bank_information'] = array(
     '#type' => 'textarea',
     '#title' => t('Other Bank Information/Comments'),
-    '#description' => '<code class="help">Please add any comments relevant to payment, account holder, bank information, or payment address information</code>',
+    '#field_suffix' => '<code class="help">Please add any comments relevant to payment, account holder, bank information, or payment address information</code>',
     '#default_value' => $contact['Bank_Information::Other_Bank_Information_Comments'],
 
   );
@@ -477,14 +481,14 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
   $form['contact_information']['first_name'] = array(
     '#type' => 'textfield',
     '#title' => t('First name'),
-    '#description' => '<code class="help">this is the name according to which you are registered in the system at PUM. It is the name according to which we will approach you.</code>',
+    '#field_suffix' => '<code class="help">this is the name according to which you are registered in the system at PUM. It is the name according to which we will approach you.</code>',
     '#default_value' => $contact['first_name'],
     '#required' => true,
   );
   $form['contact_information']['middle_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Infix'),
-    '#description' => '<code class="help">de, het, van de, etc.</code>',
+    '#field_suffix' => '<code class="help">de, het, van de, etc.</code>',
     '#default_value' => $contact['middle_name'],
   );
   $form['contact_information']['last_name'] = array(
@@ -528,7 +532,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
   $form['contact_information']['country_id'] = array(
     '#type' => 'select',
     '#title' => t('Country'),
-    '#description' => 'PUM only includes experts in its database who are resident in the Netherlands. In consultation with the sector coordinator and Head of HRM, exceptions may be made in specific cases, for border areas in Belgium and Germany.',
+    '#field_suffix' => 'PUM only includes experts in its database who are resident in the Netherlands. In consultation with the sector coordinator and Head of HRM, exceptions may be made in specific cases, for border areas in Belgium and Germany.',
     '#default_value' => !empty($contact['home_address']['country_id']) ? $contact['home_address']['country_id'] : 1152,
     '#options' => $benelux,
     '#required' => true,
@@ -538,7 +542,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#type' => 'textfield',
     '#title' => t('Home phone number'),
     '#default_value' => $contact['home_phone']['phone'],
-    '#description' => '<code class="help">For example: +31 50 1234567 or +31 6 12345678</code>In case of no other telephone than your mobile phone, please enter your mobile phone number here',
+    '#field_suffix' => '<code class="help">For example: +31 50 1234567 or +31 6 12345678</code>In case of no other telephone than your mobile phone, please enter your mobile phone number here',
     '#rules' => array(
       'phone_validation',
     ),
@@ -573,7 +577,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
 
   $form['passport']['#type'] = 'fieldset';
   $form['passport']['#title'] = t('Passport information');
-  $form['passport']['#description'] = 'In connection with booking tickets, we will need your full name as appearing in your passport.';
+  $form['passport']['#field_suffix'] = 'In connection with booking tickets, we will need your full name as appearing in your passport.';
 
   $form['passport']['passport_first_name'] = array(
     '#type' => 'textfield',
@@ -590,7 +594,7 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
   $form['passport']['passport_partner_name'] = array(
     '#type' => 'textfield',
     '#title' => t('E / V (Partner Surname)'),
-    '#description' => '<code class="help">If you have no married name, you are not required to complete this field.</code>',
+    '#field_suffix' => '<code class="help">If you have no married name, you are not required to complete this field.</code>',
     '#default_value' => $contact['Passport_Information::Passport_Name_Partner_Last_Name'],
   );
   $form['passport']['passport_number'] = array(

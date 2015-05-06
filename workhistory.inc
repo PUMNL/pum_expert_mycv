@@ -12,7 +12,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
 
   $form['workhistory_info']['#type'] = 'fieldset';
   $form['workhistory_info']['#title'] = t('Workhistory');
-  $form['workhistory_info']['#description'] = 'Please provide us with your relevant work experience details starting with your most recent work experience and working backwards in chronological order. For each additional work experience entry you wish to submit, click the box at the bottom of the form. The maximum number of work experience entries you can list is 10.';
+  $form['workhistory_info']['#field_suffix'] = 'Please provide us with your relevant work experience details starting with your most recent work experience and working backwards in chronological order. For each additional work experience entry you wish to submit, click the box at the bottom of the form. The maximum number of work experience entries you can list is 10.';
   $form['workhistory_info']['info'] = array(
     '#type' => 'markup',
     '#markup' => t('Please provide us with your relevant work experience details. For each additional work experience you wish to submit, klick the box at the bottom of the form.'),
@@ -66,7 +66,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_years_from_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('Years from'),
-      '#description' => '<code class="help">Use the full year notation (example: 1980)</code>',
+      '#field_suffix' => '<code class="help">Use the full year notation (example: 1980)</code>',
       '#default_value' => isset($workhistory[$i]['Workhistory::Yeard_From']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Yeard_From'] : '',
       '#rules' => array(
         'numeric',
@@ -78,7 +78,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_to_'.$i] = array(
       '#type' => 'textfield',
       '#title' => t('Years to'),
-      '#description' => '<code class="help">Use the full year notation (example: 1980). Enter the next or a further in the future year, in case you are in active employment.</code>',
+      '#field_suffix' => '<code class="help">Use the full year notation (example: 1980). Enter the next or a further in the future year, in case you are in active employment.</code>',
       '#default_value' => isset($workhistory[$i]['Workhistory::To']) && !$addMorePressed ? $workhistory[$i]['Workhistory::To'] : '',
       '#rules' => array(
         'numeric',
@@ -97,7 +97,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $rebuild=false) {
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_description_'.$i] = array(
       '#type' => 'textarea',
       '#title' => t('Description'),
-      '#description' => '<code class="help">Specify as accurately as possible the nature of your  tasks, and any special activities.</code>',
+      '#field_suffix' => '<code class="help">Specify as accurately as possible the nature of your  tasks, and any special activities.</code>',
       '#default_value' => isset($workhistory[$i]['Workhistory::Description']) && !$addMorePressed ? $workhistory[$i]['Workhistory::Description'] : '',
       '#required' => true,
     );

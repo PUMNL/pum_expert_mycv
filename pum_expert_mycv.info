@@ -10,5 +10,6 @@ dependencies[] = date
 dependencies[] = date_popup
 dependencies[] = pum_civicrm_views
 dependencies[] = fapi_validation
+dependencies[] = pum_portal_webform_help
 
 files[] = pum_expert_my_cv_enhanced_tags.inc
