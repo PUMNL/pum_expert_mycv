@@ -92,6 +92,10 @@ function candidate_expert_cv_validate_code_of_conduct($form, &$form_state) {
 function candidate_expert_cv_previous($form, &$form_state) {
   $form_state['step'] = $form_state['step'] - 2;
   $form_state['rebuild'] = TRUE;
+
+  $path = drupal_get_path('module', 'pum_portal_webform_help');
+  drupal_add_js($path . '/ppwh.js');
+  drupal_add_css($path . '/ppwh.css');
 }
 
 function candidate_expert_cv_submit($form, &$form_state) {
@@ -118,6 +122,8 @@ function candidate_expert_cv_submit($form, &$form_state) {
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Name_Partner_Last_Name')] = $form_state['storedvalues'][0]['passport_partner_name'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Number')] = $form_state['storedvalues'][0]['passport_number'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Valid_until')] = _pum_expert_cv_form_date_submitted_string_value($form_state['storedvalues'][0]['passport_valid_until']);
+    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Place_of_Issue')] = $form_state['storedvalues'][0]['passport_place_of_issue'];
+    $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Passport_Information::Passport_Issue_Date')] = _pum_expert_cv_form_date_submitted_string_value($form_state['storedvalues'][0]['passport_issue_date']);
 
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('In_Case_of_Emergency_Contact::Relationship_with_contact')] = $form_state['storedvalues'][0]['ice_relationship'];
     $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('In_Case_of_Emergency_Contact::Other_relationship')] = $form_state['storedvalues'][0]['ice_other'];
@@ -239,6 +245,10 @@ function candidate_expert_cv_submit($form, &$form_state) {
     drupal_set_message(t('Your CV is successfully updated'));
     $form_state['redirect'] = 'portal';
   }
+
+  $path = drupal_get_path('module', 'pum_portal_webform_help');
+  drupal_add_js($path . '/ppwh.js');
+  drupal_add_css($path . '/ppwh.css');
 }
 
 function candidate_expert_cv_get_forms(&$form_state, $currstep) {
@@ -610,6 +620,22 @@ function candidate_expert_cv_contact_details(&$form_state, $rebuild=false) {
     '#title' => t('Passport Expiry Date'),
     '#date_year_range' => '0:+10',
     '#default_value' => _pum_expert_cv_form_date_string_value($contact['Passport_Information::Passport_Valid_until']),
+    '#required' => true,
+  );
+
+  $form['passport']['passport_place_of_issue'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Passport Place of Issue'),
+    '#default_value' => $contact['Passport_Information::Passport_Place_of_Issue'],
+    '#required' => true,
+  );
+
+  $form['passport']['passport_issue_date'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'Y-m-d',
+    '#title' => t('Passport Issue Date'),
+    '#date_year_range' => '0:+10',
+    '#default_value' => _pum_expert_cv_form_date_string_value($contact['Passport_Information::Passport_Issue_Date']),
     '#required' => true,
   );
 
