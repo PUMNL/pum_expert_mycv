@@ -34,6 +34,7 @@ function pum_expert_mycv_get_civi_contact() {
       'location_type_id' => $home_loc
     ));
   } catch (Exception $e) {
+    $home_address['location_type_id'] = $home_loc;
     //do nothing
   }
 
@@ -56,6 +57,7 @@ function pum_expert_mycv_get_civi_contact() {
     $home_phone['id'] = false;
     $home_phone['phone_type_id'] = $home_phone_type;
     $home_phone['phone'] = '';
+    $home_phone['location_type_id'] = $home_loc;
   }
   $contact['home_phone'] = $home_phone;
 
@@ -65,6 +67,7 @@ function pum_expert_mycv_get_civi_contact() {
     $mobile_phone['id'] = false;
     $mobile_phone['phone_type_id'] = $mobile_type;
     $mobile_phone['phone'] = '';
+    $mobile_phone['location_type_id'] = $home_loc;
   }
   $contact['mobile'] = $mobile_phone;
 
@@ -74,6 +77,7 @@ function pum_expert_mycv_get_civi_contact() {
     $fax['id'] = false;
     $fax['phone_type_id'] = $fax_type;
     $fax['phone'] = '';
+    $fax['location_type_id'] = $home_loc;
   }
   $contact['fax'] = $fax;
 
@@ -82,6 +86,7 @@ function pum_expert_mycv_get_civi_contact() {
   } catch (Exception $e) {
     $email['id'] = false;
     $email['email'] = '';
+    $email['location_type_id'] = $home_loc;
   }
   $contact['email'] = $email;
 

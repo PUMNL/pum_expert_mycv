@@ -24,11 +24,17 @@ $handler->display->display_options['query']['type'] = 'views_query';
 $handler->display->display_options['exposed_form']['type'] = 'basic';
 $handler->display->display_options['pager']['type'] = 'none';
 $handler->display->display_options['style_plugin'] = 'table';
+/* Footer: Global: Text area */
+$handler->display->display_options['footer']['area']['id'] = 'area';
+$handler->display->display_options['footer']['area']['table'] = 'views';
+$handler->display->display_options['footer']['area']['field'] = 'area';
+$handler->display->display_options['footer']['area']['content'] = '<span class="description">These are issues you need to know when you have been selected for a main activity. Possibilities include (temporary) limited availability or health-related issues preventing you from being seconded to certain areas. If the restriction is related to personal reasons, this should also be recorded and the details known only to the Head of HRM.</span>';
+$handler->display->display_options['footer']['area']['format'] = 'filtered_html';
 /* Relationship: CiviCRM Activity Contacts: Activity Contact ID */
 $handler->display->display_options['relationships']['contact_id']['id'] = 'contact_id';
 $handler->display->display_options['relationships']['contact_id']['table'] = 'civicrm_activity_contact';
 $handler->display->display_options['relationships']['contact_id']['field'] = 'contact_id';
-$handler->display->display_options['relationships']['contact_id']['record_type'] = '0';
+$handler->display->display_options['relationships']['contact_id']['record_type'] = '1';
 /* Relationship: CiviCRM Contacts: Drupal ID */
 $handler->display->display_options['relationships']['drupal_id']['id'] = 'drupal_id';
 $handler->display->display_options['relationships']['drupal_id']['table'] = 'civicrm_contact';

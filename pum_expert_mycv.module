@@ -6,6 +6,35 @@ function pum_expert_mycv_views_api() {
     return array('api' => 3.0);
 }
 
+function pum_expert_mycv_value($values, $contact, $value_key, $contact_key, $type='', $default='', $return_default=false) {
+  if (isset($values[$value_key])) {
+    return $values[$value_key];
+  }
+
+  if ($return_default) {
+    return $default;
+  }
+
+  $value = null;
+  if (isset($contact[$contact_key])) {
+    $value = $contact[$contact_key];
+  }
+
+  if (!empty($default) && empty($value)) {
+    $value = $default;
+  }
+
+  if (!empty($value) && !empty($type)) {
+    switch($type) {
+      case 'date':
+        $value = _pum_expert_cv_form_date_string_value($value);
+        break;
+    }
+  }
+
+  return $value;
+}
+
 /**
  * Implementation of hook_fapi_validation_rules
  */

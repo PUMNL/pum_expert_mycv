@@ -152,6 +152,14 @@ $handler->display->display_options['fields']['php_2']['use_php_click_sortable'] 
 $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
 $handler->display->display_options['fields']['php_2']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['php_2']['element_label_colon'] = FALSE;
+/* Field: Global: Custom text */
+$handler->display->display_options['fields']['help_area_of_expertise']['id'] = 'help_area_of_expertise';
+$handler->display->display_options['fields']['help_area_of_expertise']['table'] = 'views';
+$handler->display->display_options['fields']['help_area_of_expertise']['field'] = 'nothing';
+$handler->display->display_options['fields']['help_area_of_expertise']['label'] = 'Area of Expertise';
+$handler->display->display_options['fields']['help_area_of_expertise']['alter']['text'] = '<span class="description">these areas of expertise will have been determined in consultation with your sector coordinator, for the sector to which you are allocated, but possibly also (not more than) one other sector.</span>';
+$handler->display->display_options['fields']['help_area_of_expertise']['element_label_type'] = 'strong';
+$handler->display->display_options['fields']['help_area_of_expertise']['element_label_colon'] = FALSE;
 /* Field: Global: PHP */
 $handler->display->display_options['fields']['php_3']['id'] = 'php_3';
 $handler->display->display_options['fields']['php_3']['table'] = 'views';
@@ -170,6 +178,14 @@ $handler->display->display_options['fields']['generic_skilss_568']['field'] = $g
 $handler->display->display_options['fields']['generic_skilss_568']['label'] = 'Generic skills';
 $handler->display->display_options['fields']['generic_skilss_568']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['generic_skilss_568']['element_label_colon'] = FALSE;
+/* Field: Global: Custom text */
+$handler->display->display_options['fields']['help_generic_skills']['id'] = 'help_generic_skills';
+$handler->display->display_options['fields']['help_generic_skills']['table'] = 'views';
+$handler->display->display_options['fields']['help_generic_skills']['field'] = 'nothing';
+$handler->display->display_options['fields']['help_generic_skills']['label'] = 'Generic skills';
+$handler->display->display_options['fields']['help_generic_skills']['alter']['text'] = '<span class="description">these are your general skills as relevant to PUM. These will have been determined in consultation with your sector coordinator.</span>';
+$handler->display->display_options['fields']['help_generic_skills']['element_label_type'] = 'strong';
+$handler->display->display_options['fields']['help_generic_skills']['element_label_colon'] = FALSE;
 /* Field: Languages */
 $handler->display->display_options['fields']['view_1']['id'] = 'view_1';
 $handler->display->display_options['fields']['view_1']['table'] = 'views';
@@ -217,7 +233,7 @@ $handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
 $handler->display->display_options['fields']['nothing_2']['table'] = 'views';
 $handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
 $handler->display->display_options['fields']['nothing_2']['label'] = '';
-$handler->display->display_options['fields']['nothing_2']['alter']['text'] = 'You have agreed with the Code of Conduct';
+$handler->display->display_options['fields']['nothing_2']['alter']['text'] = 'you have signed our Agreement Code of Conduct';
 $handler->display->display_options['fields']['nothing_2']['element_label_colon'] = FALSE;
 /* Field: Global: Custom text */
 $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
