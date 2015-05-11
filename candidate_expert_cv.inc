@@ -543,7 +543,7 @@ function candidate_expert_cv_contact_details(&$form_state) {
     '#type' => 'date_popup',
     '#date_format' => 'Y-m-d',
     '#title' => t('Passport Issue Date'),
-    '#date_year_range' => '0:+10',
+    '#date_year_range' => '-11:+1',
     '#default_value' => pum_expert_mycv_value($values, $contact, 'passport_issue_date', 'Passport_Information::Passport_Issue_Date', 'date'),
     '#required' => true,
   );
