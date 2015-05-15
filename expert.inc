@@ -78,6 +78,7 @@ function expert_cv_validate($form, &$form_state) {
 }
 
 function expert_cv_submit($form, &$form_state) {
+  $form_state['storedvalues'][$form_state['step']] = $form_state['values'];
   civicrm_initialize();
   //store the form
   $session = CRM_Core_Session::singleton();
