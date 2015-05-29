@@ -172,19 +172,21 @@ class pum_expert_my_cv_enhanced_tags {
                 $tagChildren = civicrm_api3('Tag', 'Get', $childParams);
                 $gotAllChildren = $this->gotAllSectorChildren($tagChildren['count']);
                 if ($tagChildren['count'] > 0) {
-                    $this->addSectorChildren($tagChildren['values']);
-                    $levelChildren = $this->sectorTree;
+                  $levelChildren = $this->addSectorChildren($tagChildren['values']);
                 }
             }
         }
     }
 
     private function addSectorChildren($tagChildren) {
+        $return = array();
         foreach ($tagChildren as $tagChild) {
             if (!in_array($tagChild['id'], $this->sectorTree)) {
                 $this->sectorTree[] = $tagChild['id'];
+                $return[] = $tagChild['id'];
             }
         }
+        return $return;
     }
 
     private function gotAllSectorChildren($count) {
