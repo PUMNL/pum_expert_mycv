@@ -141,14 +141,7 @@ function candidate_expert_cv_code_of_conduct(&$form_state) {
 
   $form['code_of_conduct']['info'] = array(
     '#type' => 'markup',
-    '#markup' => t('PUM sets high standards as regard honesty, integrity and mutual respect for people and the environment. Our code of Conduct is described in the publication: %1. In order to join PUM as an expert we ask you to agree with our code of conduct by ticking the checkbox below. Once you have entered all your details (in English), please send this form to PUM by clicking the submit button. ', array(
-      1 => '<a href="https://www.pum.nl/code-conduct">Leidraad voor Experts</a>',
-    ))
-  );
-
-  $form['code_of_conduct']['link'] = array(
-    '#type' => 'markup',
-    '#markup' => '<p>'.l(t('Read code of conduct'), 'https://www.pum.nl/content/Basisvoorwaarden').'</p>',
+    '#markup' => t('PUM sets high standards as regard honesty, integrity and mutual respect for people and the environment. Our code of Conduct is described in the publication: ').'<a href="https://www.pum.nl/code-conduct">Leidraad voor Experts</a>'.t('In order to join PUM as an expert we ask you to agree with our code of conduct by ticking the checkbox below. Once you have entered all your details (in English), please send this form to PUM by clicking the submit button. ')
   );
 
   $form['code_of_conduct']['code_of_conduct'] = array(
