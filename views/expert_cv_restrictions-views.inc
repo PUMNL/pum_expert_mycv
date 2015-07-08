@@ -55,7 +55,7 @@ $handler->display->display_options['fields']['activity_date_time']['table'] = 'c
 $handler->display->display_options['fields']['activity_date_time']['field'] = 'activity_date_time';
 $handler->display->display_options['fields']['activity_date_time']['label'] = 'Date';
 $handler->display->display_options['fields']['activity_date_time']['date_format'] = 'custom';
-$handler->display->display_options['fields']['activity_date_time']['custom_date_format'] = 'd F Y';
+$handler->display->display_options['fields']['activity_date_time']['custom_date_format'] = 'j F Y';
 $handler->display->display_options['fields']['activity_date_time']['second_date_format'] = 'long';
 /* Field: CiviCRM Activities: Activity Status */
 $handler->display->display_options['fields']['status']['id'] = 'status';

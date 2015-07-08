@@ -94,7 +94,7 @@ $handler->display->display_options['fields']['start_date_expert_status_124']['fi
 $handler->display->display_options['fields']['start_date_expert_status_124']['hide_empty'] = TRUE;
 $handler->display->display_options['fields']['start_date_expert_status_124']['empty_zero'] = TRUE;
 $handler->display->display_options['fields']['start_date_expert_status_124']['date_format'] = 'custom';
-$handler->display->display_options['fields']['start_date_expert_status_124']['custom_date_format'] = 'd F Y';
+$handler->display->display_options['fields']['start_date_expert_status_124']['custom_date_format'] = 'j F Y';
 $handler->display->display_options['fields']['start_date_expert_status_124']['second_date_format'] = 'long';
 $handler->display->display_options['fields']['start_date_expert_status_124']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['start_date_expert_status_124']['element_label_colon'] = FALSE;
@@ -105,7 +105,7 @@ $handler->display->display_options['fields']['end_date_expert_status_125']['fiel
 $handler->display->display_options['fields']['end_date_expert_status_125']['hide_empty'] = TRUE;
 $handler->display->display_options['fields']['end_date_expert_status_125']['empty_zero'] = TRUE;
 $handler->display->display_options['fields']['end_date_expert_status_125']['date_format'] = 'custom';
-$handler->display->display_options['fields']['end_date_expert_status_125']['custom_date_format'] = 'd F Y';
+$handler->display->display_options['fields']['end_date_expert_status_125']['custom_date_format'] = 'j F Y';
 $handler->display->display_options['fields']['end_date_expert_status_125']['second_date_format'] = 'long';
 $handler->display->display_options['fields']['end_date_expert_status_125']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['end_date_expert_status_125']['element_label_colon'] = FALSE;
