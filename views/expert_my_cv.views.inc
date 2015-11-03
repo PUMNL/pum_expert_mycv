@@ -157,7 +157,7 @@ $handler->display->display_options['fields']['help_area_of_expertise']['id'] = '
 $handler->display->display_options['fields']['help_area_of_expertise']['table'] = 'views';
 $handler->display->display_options['fields']['help_area_of_expertise']['field'] = 'nothing';
 $handler->display->display_options['fields']['help_area_of_expertise']['label'] = 'Area of Expertise';
-$handler->display->display_options['fields']['help_area_of_expertise']['alter']['text'] = '<span class="description">these areas of expertise these are determined in consultation with your sector coordinator, for the sector to which you are allocated, but possibly also (not more than) one other sector.</span>';
+$handler->display->display_options['fields']['help_area_of_expertise']['alter']['text'] = '<span class="description">these areas of expertise have been determined in consultation with your sector coordinator, for the sector to which you are allocated, but possibly also (not more than) one other sector.</span>';
 $handler->display->display_options['fields']['help_area_of_expertise']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['help_area_of_expertise']['element_label_colon'] = FALSE;
 /* Field: Global: PHP */
@@ -183,7 +183,7 @@ $handler->display->display_options['fields']['help_generic_skills']['id'] = 'hel
 $handler->display->display_options['fields']['help_generic_skills']['table'] = 'views';
 $handler->display->display_options['fields']['help_generic_skills']['field'] = 'nothing';
 $handler->display->display_options['fields']['help_generic_skills']['label'] = 'Generic skills';
-$handler->display->display_options['fields']['help_generic_skills']['alter']['text'] = '<span class="description">these are your general skills as relevant to PUM. These these are determined in consultation with your sector coordinator.</span>';
+$handler->display->display_options['fields']['help_generic_skills']['alter']['text'] = '<span class="description">these are your general skills as relevant to PUM. These have been determined in consultation with your sector coordinator.</span>';
 $handler->display->display_options['fields']['help_generic_skills']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['help_generic_skills']['element_label_colon'] = FALSE;
 /* Field: Languages */
