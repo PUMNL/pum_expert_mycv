@@ -94,7 +94,7 @@ $handler->display->display_options['fields']['start_date_expert_status_124']['fi
 $handler->display->display_options['fields']['start_date_expert_status_124']['hide_empty'] = TRUE;
 $handler->display->display_options['fields']['start_date_expert_status_124']['empty_zero'] = TRUE;
 $handler->display->display_options['fields']['start_date_expert_status_124']['date_format'] = 'custom';
-$handler->display->display_options['fields']['start_date_expert_status_124']['custom_date_format'] = 'd-m-Y';
+$handler->display->display_options['fields']['start_date_expert_status_124']['custom_date_format'] = 'j F Y';
 $handler->display->display_options['fields']['start_date_expert_status_124']['second_date_format'] = 'long';
 $handler->display->display_options['fields']['start_date_expert_status_124']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['start_date_expert_status_124']['element_label_colon'] = FALSE;
@@ -105,7 +105,7 @@ $handler->display->display_options['fields']['end_date_expert_status_125']['fiel
 $handler->display->display_options['fields']['end_date_expert_status_125']['hide_empty'] = TRUE;
 $handler->display->display_options['fields']['end_date_expert_status_125']['empty_zero'] = TRUE;
 $handler->display->display_options['fields']['end_date_expert_status_125']['date_format'] = 'custom';
-$handler->display->display_options['fields']['end_date_expert_status_125']['custom_date_format'] = 'd-m-Y';
+$handler->display->display_options['fields']['end_date_expert_status_125']['custom_date_format'] = 'j F Y';
 $handler->display->display_options['fields']['end_date_expert_status_125']['second_date_format'] = 'long';
 $handler->display->display_options['fields']['end_date_expert_status_125']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['end_date_expert_status_125']['element_label_colon'] = FALSE;
@@ -157,7 +157,7 @@ $handler->display->display_options['fields']['help_area_of_expertise']['id'] = '
 $handler->display->display_options['fields']['help_area_of_expertise']['table'] = 'views';
 $handler->display->display_options['fields']['help_area_of_expertise']['field'] = 'nothing';
 $handler->display->display_options['fields']['help_area_of_expertise']['label'] = 'Area of Expertise';
-$handler->display->display_options['fields']['help_area_of_expertise']['alter']['text'] = '<span class="description">these areas of expertise will have been determined in consultation with your sector coordinator, for the sector to which you are allocated, but possibly also (not more than) one other sector.</span>';
+$handler->display->display_options['fields']['help_area_of_expertise']['alter']['text'] = '<span class="description">these areas of expertise have been determined in consultation with your sector coordinator, for the sector to which you are allocated, but possibly also (not more than) one other sector.</span>';
 $handler->display->display_options['fields']['help_area_of_expertise']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['help_area_of_expertise']['element_label_colon'] = FALSE;
 /* Field: Global: PHP */
@@ -183,7 +183,7 @@ $handler->display->display_options['fields']['help_generic_skills']['id'] = 'hel
 $handler->display->display_options['fields']['help_generic_skills']['table'] = 'views';
 $handler->display->display_options['fields']['help_generic_skills']['field'] = 'nothing';
 $handler->display->display_options['fields']['help_generic_skills']['label'] = 'Generic skills';
-$handler->display->display_options['fields']['help_generic_skills']['alter']['text'] = '<span class="description">these are your general skills as relevant to PUM. These will have been determined in consultation with your sector coordinator.</span>';
+$handler->display->display_options['fields']['help_generic_skills']['alter']['text'] = '<span class="description">these are your general skills as relevant to PUM. These have been determined in consultation with your sector coordinator.</span>';
 $handler->display->display_options['fields']['help_generic_skills']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['help_generic_skills']['element_label_colon'] = FALSE;
 /* Field: Languages */
