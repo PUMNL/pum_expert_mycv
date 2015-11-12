@@ -107,6 +107,9 @@ function candidate_expert_cv_validate_code_of_conduct($form, &$form_state) {
   if (empty($form_state['values']['code_of_conduct'])) {
     form_set_error('code_of_conduct', t('You didn\'t agree to the Code of Conduct'));
   }
+  if (empty($form_state['values']['privacy_scheme'])) {
+    form_set_error('privacy_scheme_agree', t('You didn\'t agree to the Privacy Scheme'));
+  }
 
   $path = drupal_get_path('module', 'pum_portal_webform_help');
   drupal_add_js($path . '/ppwh.js');
@@ -149,7 +152,20 @@ function candidate_expert_cv_code_of_conduct(&$form_state) {
     '#title' => t('I agree to the Code of Conduct'),
   );
 
-  $form['code_of_conduct']['description'] = array(
+  $form['privacy_scheme_agree']['#type'] = 'fieldset';
+  $form['privacy_scheme_agree']['#title'] = t('PUM Privacy Scheme');
+
+  $form['privacy_scheme_agree']['privacy_scheme_info'] = array(
+    '#type' => 'markup',
+    '#markup' => 'by ticking the checkbox below, I agree with the inclusion of my data in the PUM ICT system and am familiar with <a href="https://www.pum.nl/share-knowledge/pum-privacy-scheme">PUM\'s Privacy Policy</a>',
+  );
+
+  $form['privacy_scheme_agree']['privacy_scheme'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('PUM privacy scheme'),
+  );
+
+  $form['description'] = array(
     '#type' => 'markup',
     '#markup' => '<p>Make sure you have checked all your details before submitting this form.</p>',
   );
@@ -685,6 +701,7 @@ function candidate_expert_cv_submit($form, &$form_state) {
   $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('Bank_Information::Other_Bank_Information_Comments')] = $form_state['storedvalues'][1]['other_bank_information'];
 
   $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('expert_data::code_conduct')] = $form_state['storedvalues'][4]['code_of_conduct'] ? 'Yes' : '';
+  $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('expert_data::Agreement_PUM_privacy_scheme')] = $form_state['storedvalues'][4]['privacy_scheme'] ? 'Yes' : '';
 
   civicrm_api3('Contact', 'create', $contact);
 
