@@ -71,25 +71,17 @@ function pum_expert_mycv_workhistory_form(&$form_state, $name) {
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_years_from_'.$i] = array(
       '#type' => 'textfield',
-      '#title' => t('Years from'),
+      '#title' => t('From (year)'),
       '#field_suffix' => '<code class="help">Use the full year notation (example: 1980)</code>',
       '#default_value' => pum_expert_mycv_value($values, $workhistory[$i], 'workhistory_years_from_'.$i, 'Workhistory::Yeard_From', '', '', $addMorePressed),
-      '#rules' => array(
-        'numeric',
-        'length[4]',
-      ),
       '#required' => true,
     );
 
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_to_'.$i] = array(
       '#type' => 'textfield',
-      '#title' => t('Years to'),
-      '#field_suffix' => '<code class="help">Use the full year notation (example: 1980). Enter the next or a further in the future year, in case you are in active employment.</code>',
+      '#title' => t('Until (year)'),
+      '#field_suffix' => '<code class="help">Use the full year notation (example: 1980). In case you are still in active employment, write down "ongoing".</code>',
       '#default_value' => pum_expert_mycv_value($values, $workhistory[$i], 'workhistory_to_'.$i, 'Workhistory::To', '', '', $addMorePressed),
-      '#rules' => array(
-        'numeric',
-        'length[4]',
-      ),
       '#required' => true,
     );
 
@@ -111,6 +103,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $name) {
     $form['workhistory_entries']['workhistory']['workhistory_'.$i]['workhistory_competences_'.$i] = array(
       '#type' => 'textarea',
       '#title' => t('Compentences used in this job'),
+      '#field_suffix' => '<code class="help">This refers to distinctive expertise, related to the specific responsibilities you had in this position. The purpose of this information is to give the PUM customer insight about specific knowledge that you acquired while you held this job. <br>For instance: commercial insight in the food retail market, specific expertise in the field of ..., product knowledge, product development, financial insight, Human Resources, acquisition etc. (Use terms and areas of expertise that describe your professional duties and used expertise in this specific job).<br><br>It is NOT the intention to mention personal characteristics referring to general qualities regarding creativity, innovation, collaboration, quality minded, team player, leadership etc.</code>',
       '#default_value' => pum_expert_mycv_value($values, $workhistory[$i], 'workhistory_competences_'.$i, 'Workhistory::Competences_used_in_this_job', '', '', $addMorePressed),
       '#required' => true,
     );
