@@ -190,7 +190,7 @@ function pum_expert_mycv_civi_save_education($contact_id, $data, $num_educations
     $education_params[$fields['Field_of_study_major'].':'.$key] = $data['education_field_of_study_'.$i];
     $education_params[$fields['City'].':'.$key] = $data['education_city_'.$i];
     $education_params[$fields['Country'].':'.$key] = $data['education_country_'.$i];
-    $education_params[$fields['Education_level'].':'.$key] = $data['education_education_level_'.$i];
+    $education_params[$fields['Education_level'].':'.$key] = array($data['education_education_level_'.$i]);
     $education_params[$fields['Years_From'].':'.$key] = $data['education_years_from_'.$i];
     $education_params[$fields['To'].':'.$key] = $data['education_to_'.$i];
     $education_params[$fields['Diploma_Degree'].':'.$key] = $data['education_diploma_degree_'.$i];
