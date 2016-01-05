@@ -19,11 +19,13 @@ class pum_expert_my_cv_contact_segments {
         $sector_coordinators = array();
         $sectors = self::get_sectors($contact_id);
         foreach ($sectors as $segment_id => $segment) {
-            $sector_coordinators[$segment_id] = civicrm_api3('ContactSegment', 'Getvalue', array(
-              'is_active' => 1,
-              'role_value' => 'Sector Coordinator',
-              'segment_id' => $segment_id,
-              'return' => 'contact_id'));
+            try {
+              $sector_coordinators[$segment_id] = civicrm_api3('ContactSegment', 'Getvalue', array(
+                'is_active' => 1,
+                'role_value' => 'Sector Coordinator',
+                'segment_id' => $segment_id,
+                'return' => 'contact_id'));
+            } catch (CiviCRM_API3_Exception $ex) {}
         }
         return $sector_coordinators;
     }
