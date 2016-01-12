@@ -6,23 +6,6 @@ function pum_expert_mycv_views_api() {
     return array('api' => 3.0);
 }
 
-/**
- * Alter the list of forms configured for autosaving.
- *
- * To enable alter saving at a form add the form_id to the array of $form;
- *
- * @param $forms array
- * @param $form
- * @param $form_id
- * @param $form_state
- * @return array
- */
-function pum_expert_mycv_autosavewebform_alter_autosaving_forms($forms, $form, $form_id, $form_state) {
-  $forms[] = 'candidate_expert_cv';
-  $forms[] = 'expert_cv';
-  return $forms;
-}
-
 function pum_expert_mycv_value($values, $contact, $value_key, $contact_key, $type='', $default='', $return_default=false) {
   if (isset($values[$value_key])) {
     return $values[$value_key];
