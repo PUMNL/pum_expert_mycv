@@ -144,7 +144,7 @@ function candidate_expert_cv_code_of_conduct(&$form_state) {
 
   $form['code_of_conduct']['info'] = array(
     '#type' => 'markup',
-    '#markup' => t('PUM sets high standards as regard honesty, integrity and mutual respect for people and the environment. Our code of Conduct is described in the publication: ').'<a href="https://www.pum.nl/code-conduct">Leidraad voor Experts</a>. '.t('In order to join PUM as an expert we ask you to agree with our code of conduct by ticking the checkbox below. Once you have entered all your details (in English), please send this form to PUM by clicking the submit button. ')
+    '#markup' => t('PUM sets high standards as regard honesty, integrity and mutual respect for people and the environment. Our code of Conduct is described in the publication: ').'<a href="/code-conduct" target="_blank">Leidraad voor Experts</a>. '.t('In order to join PUM as an expert we ask you to agree with our code of conduct by ticking the checkbox below. Once you have entered all your details (in English), please send this form to PUM by clicking the submit button. ')
   );
 
   $form['code_of_conduct']['code_of_conduct'] = array(
@@ -157,7 +157,7 @@ function candidate_expert_cv_code_of_conduct(&$form_state) {
 
   $form['privacy_scheme_agree']['privacy_scheme_info'] = array(
     '#type' => 'markup',
-    '#markup' => 'by ticking the checkbox below, I agree with the inclusion of my data in the PUM ICT system and am familiar with <a href="https://www.pum.nl/share-knowledge/pum-privacy-scheme">PUM\'s Privacy Policy</a>',
+    '#markup' => 'by ticking the checkbox below, I agree with the inclusion of my data in the PUM ICT system and am familiar with <a href="/share-knowledge/pum-privacy-scheme" target="_blank">PUM\'s Privacy Policy</a>',
   );
 
   $form['privacy_scheme_agree']['privacy_scheme'] = array(
