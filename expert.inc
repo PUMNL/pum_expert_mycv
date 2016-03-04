@@ -92,6 +92,8 @@ function expert_cv_submit($form, &$form_state) {
   //update work history
   pum_expert_mycv_civi_save_workhistory($contact['id'], $form_state['storedvalues'][1], $form_state['num_workhistory']);
 
+  civicrm_api3('Cvmutation', 'create', array('contact_id' => $contact['id']));
+
   drupal_set_message(t('Your CV is successfully updated'));
   $form_state['redirect'] = 'expert/my-cv';
 }
