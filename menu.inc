@@ -16,7 +16,7 @@ function pum_expert_mycv_menu() {
   );
 
   $items['expert/my-cv-edit'] = array( //this creates a URL that will call this form at "examples/form-example"
-    'title' => t('Edit my PUM CV'), //page title
+    'title' => t('Edit my CV'), //page title
     'description' => '',
     'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
     'page arguments' => array('expert_cv', 3), //put the name of the form here
