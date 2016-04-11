@@ -32,6 +32,38 @@ $handler->display->display_options['exposed_form']['type'] = 'basic';
 $handler->display->display_options['pager']['type'] = 'full';
 $handler->display->display_options['style_plugin'] = 'default';
 $handler->display->display_options['row_plugin'] = 'fields';
+/* Header: Global: Text area */
+$handler->display->display_options['header']['area']['id'] = 'area';
+$handler->display->display_options['header']['area']['table'] = 'views';
+$handler->display->display_options['header']['area']['field'] = 'area';
+$handler->display->display_options['header']['area']['empty'] = TRUE;
+$handler->display->display_options['header']['area']['content'] = '<div class="pumnet purple"><a href="/expert/cv-edit-workhistory/!1/add" class="pumnet button purple">Add workhistory</a></div>';
+$handler->display->display_options['header']['area']['format'] = 'filtered_html';
+$handler->display->display_options['header']['area']['tokenize'] = TRUE;
+/* Footer: Global: Text area */
+$handler->display->display_options['footer']['area']['id'] = 'area';
+$handler->display->display_options['footer']['area']['table'] = 'views';
+$handler->display->display_options['footer']['area']['field'] = 'area';
+$handler->display->display_options['footer']['area']['empty'] = TRUE;
+$handler->display->display_options['footer']['area']['content'] = '<div class="pumnet purple"><a href="/expert/cv-edit-workhistory/!1/add" class="pumnet button purple">Add workhistory</a></div>';
+$handler->display->display_options['footer']['area']['format'] = 'filtered_html';
+$handler->display->display_options['footer']['area']['tokenize'] = TRUE;
+/* Field: CiviCRM Custom: Workhistory: ID */
+$handler->display->display_options['fields']['id']['id'] = 'id';
+$handler->display->display_options['fields']['id']['table'] = $cgroup['table_name'];
+$handler->display->display_options['fields']['id']['field'] = 'id';
+$handler->display->display_options['fields']['id']['label'] = '';
+$handler->display->display_options['fields']['id']['exclude'] = TRUE;
+$handler->display->display_options['fields']['id']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['id']['separator'] = '';
+/* Field: CiviCRM Contacts: Contact ID */
+$handler->display->display_options['fields']['id_1']['id'] = 'id_1';
+$handler->display->display_options['fields']['id_1']['table'] = 'civicrm_contact';
+$handler->display->display_options['fields']['id_1']['field'] = 'id';
+$handler->display->display_options['fields']['id_1']['label'] = '';
+$handler->display->display_options['fields']['id_1']['exclude'] = TRUE;
+$handler->display->display_options['fields']['id_1']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['id_1']['separator'] = '';
 /* Field: CiviCRM Custom: Workhistory: Name of Organisation */
 $handler->display->display_options['fields']['name_of_organisation_622']['id'] = 'name_of_organisation_622';
 $handler->display->display_options['fields']['name_of_organisation_622']['table'] = $cgroup['table_name'];
@@ -97,6 +129,26 @@ $handler->display->display_options['fields']['nothing']['table'] = 'views';
 $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
 $handler->display->display_options['fields']['nothing']['label'] = 'Period';
 $handler->display->display_options['fields']['nothing']['alter']['text'] = '[yeard_from_625] - [to_626]';
+/* Field: Global: Custom text */
+$handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+$handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+$handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+$handler->display->display_options['fields']['nothing_1']['label'] = '';
+$handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Edit';
+$handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+$handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'expert/cv-edit-workhistory/[id_1]/[id]';
+$handler->display->display_options['fields']['nothing_1']['alter']['absolute'] = TRUE;
+$handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
+/* Field: Global: Custom text */
+$handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
+$handler->display->display_options['fields']['nothing_2']['table'] = 'views';
+$handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
+$handler->display->display_options['fields']['nothing_2']['label'] = '';
+$handler->display->display_options['fields']['nothing_2']['alter']['text'] = 'Remove';
+$handler->display->display_options['fields']['nothing_2']['alter']['make_link'] = TRUE;
+$handler->display->display_options['fields']['nothing_2']['alter']['path'] = 'expert/cv-edit-workhistory/[id_1]/[id]/delete';
+$handler->display->display_options['fields']['nothing_2']['alter']['absolute'] = TRUE;
+$handler->display->display_options['fields']['nothing_2']['element_label_colon'] = FALSE;
 /* Contextual filter: CiviCRM Contacts: Contact ID */
 $handler->display->display_options['arguments']['id']['id'] = 'id';
 $handler->display->display_options['arguments']['id']['table'] = 'civicrm_contact';
