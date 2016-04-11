@@ -24,6 +24,36 @@ function pum_expert_mycv_menu() {
     'access arguments' => array(array('Expert')), // arg 1 loads the user, arg 2 is the role name
   );
 
+  $items['expert/cv-edit-education/%/%'] = array(
+    'title' => t('Edit education'),
+    'description' => '',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('expert_cv_education', 2, 3),
+    'access callback' => '_pum_expert_mycv_user_has_role',
+    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'file' => 'form/education.inc',
+  );
+
+  $items['expert/cv-edit-education/%/%/delete'] = array(
+    'title' => t('Edit education'),
+    'description' => '',
+    'page callback' => 'expert_cv_education_remove',
+    'page arguments' => array(2, 3),
+    'access callback' => '_pum_expert_mycv_user_has_role',
+    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'file' => 'form/education.inc',
+  );
+
+  $items['expert/cv-edit-education/%/add'] = array(
+    'title' => t('Edit education'),
+    'description' => '',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('expert_cv_education', 2),
+    'access callback' => '_pum_expert_mycv_user_has_role',
+    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'file' => 'form/education.inc',
+  );
+
   return $items;
 }
 
