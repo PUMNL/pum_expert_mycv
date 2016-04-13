@@ -125,6 +125,12 @@ function expert_cv_education($form, &$form_state, $contact_id, $id=null) {
     '#type' => 'submit',
     '#value' => t('Save'),
   );
+  $form['actions']['cancel'] = array(
+    '#type'   => 'submit',
+    '#value'  => t('Cancel'),
+    '#submit' => array('pum_expert_cv_cancel'),
+    '#limit_validation_errors' => array(),
+  );
 
   $path = drupal_get_path('module', 'pum_portal_webform_help');
   drupal_add_js($path . '/ppwh.js');
@@ -159,6 +165,60 @@ function expert_cv_education_submit($form, &$form_state) {
   } elseif (in_array("Candidate expert", $user->roles)) {
     $form_state['redirect'] = 'portal';
   }
+}
+
+/**
+ * Switches two education records
+ * 
+ * @param $contact_id
+ *   The contact ID.
+ * @param $id_1
+ *   The ID of record 1.
+ * @param $id_2
+ *   The ID of record 2.
+ */
+function expert_cv_education_switch($contact_id, $id_1, $id_2) {
+  global $user;
+  civicrm_initialize();
+  $record_1 = _expert_cv_education_get($contact_id, $id_1);
+  $record_2 = _expert_cv_education_get($contact_id, $id_2);
+  _expert_mycv_education_save($contact_id, $id_2, $record_1);
+  _expert_mycv_education_save($contact_id, $id_1, $record_2);
+  drupal_set_message(t('Your CV is successfully updated'));
+  if (in_array("Expert", $user->roles)) {
+    drupal_goto('expert/my-cv');
+  } elseif (in_array("Candidate expert", $user->roles)) {
+    drupal_goto('portal');
+  }
+}
+
+/**
+ * Get the record
+ *
+ * @param $contact_id
+ *   The contact ID.
+ * @param $id
+ *   The record ID.
+ *
+ * @return array
+ *   The record.
+ */
+function _expert_cv_education_get($contact_id, $id) {
+  $education = _expert_mycv_education_get($contact_id, $id);
+  $values = array();
+  $record = array();
+  $record['education_institution_name'] = pum_expert_mycv_value($values, $education, 'education_institution_name', 'Name_of_Institution', '', '', false);
+  $record['education_field_of_study'] = pum_expert_mycv_value($values, $education, 'education_field_of_study', 'Field_of_study_major', '', '', false);
+  $record['education_city'] = pum_expert_mycv_value($values, $education, 'education_city', 'City', '', '', false);
+  $record['education_country'] = pum_expert_mycv_value($values, $education, 'education_country', 'Country', '', '', false);
+  $record['education_education_level'] = pum_expert_mycv_value($values, $education, 'education_education_level', 'Education_level', '', '', false);
+  $record['education_years_from'] = pum_expert_mycv_value($values, $education, 'education_years_from', 'Years_From', '', '', false);
+  $record['education_to'] = pum_expert_mycv_value($values, $education, 'education_to', 'To', '', '', false);
+  $record['education_diploma_degree'] = pum_expert_mycv_value($values, $education, 'education_diploma_degree', 'Diploma_Degree', '', '', false);
+  if (is_array($record['education_education_level'])) {
+    $record['education_education_level'] = reset($record['education_education_level']);
+  }
+  return $record;
 }
 
 /**

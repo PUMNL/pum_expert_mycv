@@ -140,6 +140,12 @@ function expert_cv_workhistory($form, &$form_state, $contact_id, $id=null) {
     '#type' => 'submit',
     '#value' => t('Save'),
   );
+  $form['actions']['cancel'] = array(
+    '#type'   => 'submit',
+    '#value'  => t('Cancel'),
+    '#submit' => array('pum_expert_cv_cancel'),
+    '#limit_validation_errors' => array(),
+  );
 
   $path = drupal_get_path('module', 'pum_portal_webform_help');
   drupal_add_js($path . '/ppwh.js');
@@ -172,6 +178,60 @@ function expert_cv_workhistory_submit($form, &$form_state) {
   } elseif (in_array("Candidate expert", $user->roles)) {
     $form_state['redirect'] = 'portal';
   }
+}
+
+/**
+ * Switches two workhistory records
+ *
+ * @param $contact_id
+ *   The contact ID.
+ * @param $id_1
+ *   The ID of record 1.
+ * @param $id_2
+ *   The ID of record 2.
+ */
+function expert_cv_workhistory_switch($contact_id, $id_1, $id_2) {
+  global $user;
+  civicrm_initialize();
+  $record_1 = _expert_cv_workhistory_get($contact_id, $id_1);
+  $record_2 = _expert_cv_workhistory_get($contact_id, $id_2);
+  _expert_mycv_workhistory_save($contact_id, $id_2, $record_1);
+  _expert_mycv_workhistory_save($contact_id, $id_1, $record_2);
+  drupal_set_message(t('Your CV is successfully updated'));
+  if (in_array("Expert", $user->roles)) {
+    drupal_goto('expert/my-cv');
+  } elseif (in_array("Candidate expert", $user->roles)) {
+    drupal_goto('portal');
+  }
+}
+
+/**
+ * Get the record
+ *
+ * @param $contact_id
+ *   The contact ID.
+ * @param $id
+ *   The record ID.
+ *
+ * @return array
+ *   The record.
+ */
+function _expert_cv_workhistory_get($contact_id, $id) {
+  $workhistory = _expert_mycv_workhistory_get($contact_id, $id);
+  $values = array();
+  $record = array();
+  $record['workhistory_name_of_organisation'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_name_of_organisation', 'Workhistory::Name_of_Organisation', '', '', false);
+  $record['workhistory_city'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_city', 'Workhistory::City', '', '', false);
+  $record['workhistory_country'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_country', 'Workhistory::Country', '', '', false);
+  $record['workhistory_years_from'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_years_from', 'Workhistory::Yeard_From', '', '', false);
+  $record['workhistory_to'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_to', 'Workhistory::To', '', '', false);
+  $record['workhistory_job_title'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_job_title', 'Workhistory::Job_Title', '', '', false);
+  $record['workhistory_description'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_description', 'Workhistory::Description', '', '', false);
+  $record['workhistory_competences'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_competences', 'Workhistory::Competences_used_in_this_job', '', '', false);
+  $record['workhistory_responsibilities'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_responsibilities', 'Workhistory::Responsibilities', '', '', false);
+  $record['workhistory_countries_visited'] = pum_expert_mycv_value($values, $workhistory, 'workhistory_countries_visited', 'Workhistory::Countries_visited_in_relation_to_the_job', '', '', false);
+
+  return $record;
 }
 
 /**

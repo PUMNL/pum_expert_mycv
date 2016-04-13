@@ -58,16 +58,6 @@ $handler->display->display_options['fields']['display_name']['label'] = '';
 $handler->display->display_options['fields']['display_name']['element_type'] = 'h2';
 $handler->display->display_options['fields']['display_name']['element_label_colon'] = FALSE;
 $handler->display->display_options['fields']['display_name']['link_to_civicrm_contact'] = 0;
-/* Field: Global: Custom text */
-$handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-$handler->display->display_options['fields']['nothing']['table'] = 'views';
-$handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-$handler->display->display_options['fields']['nothing']['label'] = '';
-$handler->display->display_options['fields']['nothing']['alter']['text'] = 'Edit my CV';
-$handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-$handler->display->display_options['fields']['nothing']['alter']['path'] = 'expert/my-cv-edit';
-$handler->display->display_options['fields']['nothing']['alter']['absolute'] = TRUE;
-$handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
 /* Field: Global: PHP */
 $handler->display->display_options['fields']['php']['id'] = 'php';
 $handler->display->display_options['fields']['php']['table'] = 'views';
@@ -229,22 +219,22 @@ $handler->display->display_options['fields']['professional_affiliation_and_sid_1
 $handler->display->display_options['fields']['professional_affiliation_and_sid_128']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['professional_affiliation_and_sid_128']['element_label_colon'] = FALSE;
 /* Field: Global: Custom text */
-$handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
-$handler->display->display_options['fields']['nothing_2']['table'] = 'views';
-$handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
-$handler->display->display_options['fields']['nothing_2']['label'] = '';
-$handler->display->display_options['fields']['nothing_2']['alter']['text'] = 'you have signed our Agreement Code of Conduct';
-$handler->display->display_options['fields']['nothing_2']['element_label_colon'] = FALSE;
-/* Field: Global: Custom text */
 $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
 $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
 $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
 $handler->display->display_options['fields']['nothing_1']['label'] = '';
-$handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Edit my CV';
+$handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Edit Professional affiliation and side activities';
 $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
-$handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'expert/my-cv-edit';
+$handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'expert/additional-details';
 $handler->display->display_options['fields']['nothing_1']['alter']['absolute'] = TRUE;
 $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
+/* Field: Global: Custom text */
+$handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
+$handler->display->display_options['fields']['nothing_2']['table'] = 'views';
+$handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
+$handler->display->display_options['fields']['nothing_2']['label'] = '';
+$handler->display->display_options['fields']['nothing_2']['alter']['text'] = '<p>you have signed our Agreement Code of Conduct</p>';
+$handler->display->display_options['fields']['nothing_2']['element_label_colon'] = FALSE;
 /* Filter criterion: User: Current */
 $handler->display->display_options['filters']['uid_current']['id'] = 'uid_current';
 $handler->display->display_options['filters']['uid_current']['table'] = 'users';

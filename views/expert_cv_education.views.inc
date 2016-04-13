@@ -38,14 +38,6 @@ $handler->display->display_options['header']['area']['empty'] = TRUE;
 $handler->display->display_options['header']['area']['content'] = '<div class="pumnet purple"><a href="/expert/cv-edit-education/!1/add" class="pumnet button purple">Add an education</a></div>';
 $handler->display->display_options['header']['area']['format'] = 'filtered_html';
 $handler->display->display_options['header']['area']['tokenize'] = TRUE;
-/* Footer: Global: Text area */
-$handler->display->display_options['footer']['area']['id'] = 'area';
-$handler->display->display_options['footer']['area']['table'] = 'views';
-$handler->display->display_options['footer']['area']['field'] = 'area';
-$handler->display->display_options['footer']['area']['empty'] = TRUE;
-$handler->display->display_options['footer']['area']['content'] = '<div class="pumnet purple"><a href="/expert/cv-edit-education/!1/add" class="pumnet button purple">Add an education</a></div>';
-$handler->display->display_options['footer']['area']['format'] = 'filtered_html';
-$handler->display->display_options['footer']['area']['tokenize'] = TRUE;
 /* Field: CiviCRM Custom: Education: ID */
 $handler->display->display_options['fields']['id']['id'] = 'id';
 $handler->display->display_options['fields']['id']['table'] = $cgroup['table_name'];
@@ -115,6 +107,36 @@ $handler->display->display_options['fields']['nothing']['table'] = 'views';
 $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
 $handler->display->display_options['fields']['nothing']['label'] = 'Period';
 $handler->display->display_options['fields']['nothing']['alter']['text'] = '[years_from_591] - [to_592]';
+/* Field: Global: PHP */
+$handler->display->display_options['fields']['php_1']['id'] = 'php_1';
+$handler->display->display_options['fields']['php_1']['table'] = 'views';
+$handler->display->display_options['fields']['php_1']['field'] = 'php';
+$handler->display->display_options['fields']['php_1']['label'] = '';
+$handler->display->display_options['fields']['php_1']['alter']['alter_text'] = TRUE;
+$handler->display->display_options['fields']['php_1']['alter']['text'] = 'Move up';
+$handler->display->display_options['fields']['php_1']['alter']['make_link'] = TRUE;
+$handler->display->display_options['fields']['php_1']['alter']['path'] = 'expert/cv-edit-education/[id_1]/[id]/switch/[php_1]';
+$handler->display->display_options['fields']['php_1']['alter']['absolute'] = TRUE;
+$handler->display->display_options['fields']['php_1']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['php_1']['use_php_setup'] = 0;
+$handler->display->display_options['fields']['php_1']['php_value'] = 'return _pum_expert_mycv_get_previous_record_id($row->id_1, $row->id, "'.$cgroup['table_name'].'");';
+$handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
+$handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
+/* Field: Global: PHP */
+$handler->display->display_options['fields']['php']['id'] = 'php';
+$handler->display->display_options['fields']['php']['table'] = 'views';
+$handler->display->display_options['fields']['php']['field'] = 'php';
+$handler->display->display_options['fields']['php']['label'] = '';
+$handler->display->display_options['fields']['php']['alter']['alter_text'] = TRUE;
+$handler->display->display_options['fields']['php']['alter']['text'] = 'Move down';
+$handler->display->display_options['fields']['php']['alter']['make_link'] = TRUE;
+$handler->display->display_options['fields']['php']['alter']['path'] = 'expert/cv-edit-education/[id_1]/[id]/switch/[php]';
+$handler->display->display_options['fields']['php']['alter']['absolute'] = TRUE;
+$handler->display->display_options['fields']['php']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['php']['use_php_setup'] = 0;
+$handler->display->display_options['fields']['php']['php_value'] = 'return _pum_expert_mycv_get_next_record_id($row->id_1, $row->id, "'.$cgroup['table_name'].'");';
+$handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
+$handler->display->display_options['fields']['php']['php_click_sortable'] = '';
 /* Field: Global: Custom text */
 $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
 $handler->display->display_options['fields']['nothing_1']['table'] = 'views';

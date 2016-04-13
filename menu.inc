@@ -24,6 +24,16 @@ function pum_expert_mycv_menu() {
     'access arguments' => array(array('Expert')), // arg 1 loads the user, arg 2 is the role name
   );
 
+  $items['expert/additional-details'] = array(
+    'title' => t('Edit additional details'),
+    'description' => '',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('expert_cv_additional_details_form'),
+    'access callback' => '_pum_expert_mycv_user_has_role',
+    'access arguments' => array(array('Expert')), // arg 1 loads the user, arg 2 is the role name
+    'file' => 'form/additional_details.inc',
+  );
+
   $items['expert/cv-edit-workhistory/%/%'] = array(
     'title' => t('Edit workhistory'),
     'description' => '',
@@ -39,6 +49,16 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'expert_cv_workhistory_remove',
     'page arguments' => array(2, 3),
+    'access callback' => '_pum_expert_mycv_user_has_role',
+    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'file' => 'form/workhistory.inc',
+  );
+
+  $items['expert/cv-edit-workhistory/%/%/switch/%'] = array(
+    'title' => t('Switch workhistory'),
+    'description' => '',
+    'page callback' => 'expert_cv_workhistory_switch',
+    'page arguments' => array(2, 3,5),
     'access callback' => '_pum_expert_mycv_user_has_role',
     'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/workhistory.inc',
@@ -69,6 +89,16 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'expert_cv_education_remove',
     'page arguments' => array(2, 3),
+    'access callback' => '_pum_expert_mycv_user_has_role',
+    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'file' => 'form/education.inc',
+  );
+
+  $items['expert/cv-edit-education/%/%/switch/%'] = array(
+    'title' => t('Switch education'),
+    'description' => '',
+    'page callback' => 'expert_cv_education_switch',
+    'page arguments' => array(2, 3,5),
     'access callback' => '_pum_expert_mycv_user_has_role',
     'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/education.inc',
