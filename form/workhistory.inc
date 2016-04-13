@@ -289,7 +289,7 @@ function _expert_mycv_workhistory_save($contact_id, $id, $data) {
   }
   while($dao->fetch()) {
     $sql = "UPDATE `".$group_info['table_name']."` SET `".$columns['Countries_visited_in_relation_to_the_job']."` = %2 WHERE `id` = %1";
-    if (isset($data['workhistory_countries_visited'])) {
+    if (isset($data['workhistory_countries_visited']) && is_array($data['workhistory_countries_visited'])) {
       $val = implode(CRM_Core_DAO::VALUE_SEPARATOR, $data['workhistory_countries_visited']);
       if (strlen($val)) {
         $val = CRM_Core_DAO::VALUE_SEPARATOR.$val.CRM_Core_DAO::VALUE_SEPARATOR;
