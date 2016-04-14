@@ -195,6 +195,23 @@ function _pum_expert_mycv_get_sector_coordinator() {
 }
 
 /**
+ * Returns the record for an contact.
+ *
+ * @param $contact_id
+ *   The contact ID.
+ * @param $table
+ *   The name of the database table.
+ *
+ * @return int
+ */
+function _pum_expert_mycv_get_record_count($contact_id, $table) {
+  civicrm_initialize();
+  return CRM_Core_DAO::singleValueQuery("SELECT count(id) FROM `".$table."` WHERE `entity_id` = %1", array(
+    1 => array($contact_id, 'Integer'),
+  ));
+}
+
+/**
  * Returns the next record ID if available otherwise false
  *
  * @param $contact_id

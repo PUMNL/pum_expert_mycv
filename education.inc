@@ -3,6 +3,8 @@
 require_once('civicrm.inc');
 
 function pum_expert_mycv_education_form(&$form_state, $name) {
+  civicrm_initialize();
+  $group_info =  civicrm_api3('CustomGroup', 'getsingle', array('name' => 'Education'));
   $contact = pum_expert_mycv_get_civi_contact();
   $educations = pum_expert_mycv_get_civi_education($contact['id']);
 
@@ -28,6 +30,10 @@ function pum_expert_mycv_education_form(&$form_state, $name) {
 
   if (empty($form_state['num_educations'])) {
     $form_state['num_educations'] = count($educations) > 0 ? count($educations) : 1;
+  }
+  if (isset($group_info['max_multiple']) && $form_state['num_educations'] > $group_info['max_multiple']) {
+    $form_state['num_educations'] = $group_info['max_multiple'];
+    drupal_set_message(t('You cannot have more than @count education items', array('@count' => $group_info['max_multiple'])), 'error');
   }
   $num_educations = $form_state['num_educations'];
 

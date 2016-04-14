@@ -37,6 +37,7 @@ function expert_cv_workhistory_remove($contact_id, $id) {
  * @return mixed
  */
 function expert_cv_workhistory($form, &$form_state, $contact_id, $id=null) {
+  expert_cv_workhistory_check_count($contact_id);
   civicrm_initialize();
 
   $form_state['civicrm']['id'] = $id;
@@ -304,6 +305,29 @@ function _expert_mycv_workhistory_save($contact_id, $id, $data) {
     }
   }
   civicrm_api3('Cvmutation', 'post', array('contact_id' => $contact_id));
+}
+
+/**
+ * Checks whether a contact has more than 10 workhistory items.
+ * If so the user is redirected back with an error message.
+ *
+ * @param int $contact_id
+ *   The contact ID.
+ * @throws \CiviCRM_API3_Exception
+ */
+function expert_cv_workhistory_check_count($contact_id) {
+  global $user;
+  civicrm_initialize();
+  $group_info =  civicrm_api3('CustomGroup', 'getsingle', array('name' => 'Workhistory'));
+  $count = _pum_expert_mycv_get_record_count($contact_id, $group_info['table_name']);
+  if (!empty($group_info['max_multiple']) && $count >= $group_info['max_multiple']) {
+    drupal_set_message(t('You cannot have more than @count workhistory items', array('@count' => $group_info['max_multiple'])), 'error');
+    if (in_array("Expert", $user->roles)) {
+      drupal_goto('expert/my-cv');
+    } elseif (in_array("Candidate expert", $user->roles)) {
+      drupal_goto('portal');
+    }
+  }
 }
 
 /**

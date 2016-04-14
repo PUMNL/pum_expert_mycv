@@ -3,6 +3,8 @@
 require_once('civicrm.inc');
 
 function pum_expert_mycv_workhistory_form(&$form_state, $name) {
+  civicrm_initialize();
+  $group_info =  civicrm_api3('CustomGroup', 'getsingle', array('name' => 'Workhistory'));
   $contact = pum_expert_mycv_get_civi_contact();
   $workhistory = pum_expert_mycv_get_civi_workhistory($contact['id']);
 
@@ -28,6 +30,10 @@ function pum_expert_mycv_workhistory_form(&$form_state, $name) {
 
   if (empty($form_state['num_workhistory'])) {
     $form_state['num_workhistory'] = count($workhistory) > 0 ? count($workhistory) : 1;
+  }
+  if (isset($group_info['max_multiple']) && $form_state['num_educations'] > $group_info['max_multiple']) {
+    $form_state['num_educations'] = $group_info['max_multiple'];
+    drupal_set_message(t('You cannot have more than @count education items', array('@count' => $group_info['max_multiple'])), 'error');
   }
   $num_workhistory = $form_state['num_workhistory'];
 
