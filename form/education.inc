@@ -3,11 +3,13 @@
 function expert_cv_education_remove($contact_id, $id) {
   global $user;
   civicrm_initialize();
+  civicrm_api3('Cvmutation', 'pre', array('contact_id' => $contact_id));
   $group_info =  civicrm_api3('CustomGroup', 'getsingle', array('name' => 'Education'));
   CRM_Core_DAO::executeQuery("DELETE FROM `".$group_info['table_name']."` WHERE `id` = %1 AND `entity_id` = %2", array(
     1 => array($id, 'Integer'),
     2 => array($contact_id, 'Integer')
   ));
+  civicrm_api3('Cvmutation', 'post', array('contact_id' => $contact_id));
   drupal_set_message(t('Your CV is successfully updated'));
   if (in_array("Expert", $user->roles)) {
     drupal_goto('expert/my-cv');
@@ -253,8 +255,12 @@ function _expert_mycv_education_save($contact_id, $id, $data) {
   $education_params[$fields['Diploma_Degree'].':'.$key] = $data['education_diploma_degree'];
 
   if (count($education_params)) {
+    civicrm_api3('Cvmutation', 'pre', array('contact_id' => $contact_id));
+
     $education_params['entity_id'] = $contact_id;
     civicrm_api3('CustomValue', 'create', $education_params);
+
+    civicrm_api3('Cvmutation', 'post', array('contact_id' => $contact_id));
   }
 }
 

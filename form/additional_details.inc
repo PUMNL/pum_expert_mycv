@@ -54,9 +54,15 @@ function expert_cv_additional_details_form_submit($form, &$form_state) {
   civicrm_initialize();
   //store the form
   $session = CRM_Core_Session::singleton();
-  $contact['id'] = $session->get('userID');
+  $contact_id = $session->get('userID');
+  
+  civicrm_api3('Cvmutation', 'pre', array('contact_id' => $contact_id));
+
+  $contact['id'] = $contact_id;
   $contact['custom_'._pum_expert_mycv_get_custom_field_id_by_name('expert_data::side_activities')] = $form_state['values']['side_activities'];
   civicrm_api3('Contact', 'create', $contact);
+
+  civicrm_api3('Cvmutation', 'post', array('contact_id' => $contact_id));
 
   drupal_set_message(t('Your CV is successfully updated'));
   if (in_array("Expert", $user->roles)) {

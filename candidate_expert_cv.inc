@@ -654,10 +654,14 @@ function candidate_expert_cv_submit($form, &$form_state) {
 
   civicrm_initialize();
 
-  //store the form
   $session = CRM_Core_Session::singleton();
+  $contact_id = $session->get('userID');
+  civicrm_api3('Cvmutation', 'pre', array('contact_id' => $contact_id));
+
+  //store the form
+
   $original_contact = pum_expert_mycv_get_civi_contact();
-  $contact['id'] = $session->get('userID');
+  $contact['id'] = $contact_id;
   $contact['prefix_id'] = $form_state['storedvalues'][0]['prefix'];
   $contact['first_name'] = $form_state['storedvalues'][0]['first_name'];
   $contact['middle_name'] = $form_state['storedvalues'][0]['middle_name'];
@@ -793,6 +797,7 @@ function candidate_expert_cv_submit($form, &$form_state) {
     civicrm_api3('Case', 'create', $case_params);
   }
 
+  civicrm_api3('Cvmutation', 'post', array('contact_id' => $contact_id));
   drupal_set_message(t('Your CV is successfully updated'));
   $form_state['redirect'] = 'portal';
 }
