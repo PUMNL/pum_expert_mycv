@@ -31,9 +31,9 @@ function pum_expert_mycv_workhistory_form(&$form_state, $name) {
   if (empty($form_state['num_workhistory'])) {
     $form_state['num_workhistory'] = count($workhistory) > 0 ? count($workhistory) : 1;
   }
-  if (isset($group_info['max_multiple']) && $form_state['num_educations'] > $group_info['max_multiple']) {
-    $form_state['num_educations'] = $group_info['max_multiple'];
-    drupal_set_message(t('You cannot have more than @count education items', array('@count' => $group_info['max_multiple'])), 'error');
+  if (isset($group_info['max_multiple']) && $form_state['num_workhistory'] > $group_info['max_multiple']) {
+    $form_state['num_workhistory'] = $group_info['max_multiple'];
+    drupal_set_message(t('You cannot have more than @count workhistory items', array('@count' => $group_info['max_multiple'])), 'error');
   }
   $num_workhistory = $form_state['num_workhistory'];
 
