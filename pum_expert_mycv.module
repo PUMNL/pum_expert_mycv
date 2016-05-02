@@ -160,22 +160,20 @@ function _pum_expert_mycv_get_groups() {
 
 function _pum_expert_mycv_get_sector() {
   $session = CRM_Core_Session::singleton();
-  $enhancedTags = pum_expert_my_cv_enhanced_tags::singleton();
-  $tag_id = $enhancedTags->get_sector_tag_id($session->get('userID'));
+  $sectors = pum_expert_my_cv_contact_segments::get_sectors($session->get('userID'));
   $output = '';
-  if ($tag_id) {
-    $output = civicrm_api3('Tag', 'getvalue', array('id' => $tag_id, 'return' => 'name'));
+  foreach($sectors as $sector) {
+    $output = $sector;
   }
   return $output;
 }
 
 function _pum_expert_mycv_get_areas_of_expertise() {
   $session = CRM_Core_Session::singleton();
-  $enhancedTags = pum_expert_my_cv_enhanced_tags::singleton();
-  $tag_ids = $enhancedTags->get_areas_of_expertise_tag_ids($session->get('userID'));
+  $areas_of_expertise = pum_expert_my_cv_contact_segments::get_areas_of_expertise($session->get('userID'));
   $output = '';
-  foreach($tag_ids as $tag) {
-    $output .= '<li>'.$tag['name'].'</li>';
+  foreach($areas_of_expertise as $area_of_expertise) {
+    $output .= '<li>'.$area_of_expertise.'</li>';
   }
   if (strlen($output)) {
     $output = '<ul>' . $output . '</ul>';
@@ -185,11 +183,10 @@ function _pum_expert_mycv_get_areas_of_expertise() {
 
 function _pum_expert_mycv_get_sector_coordinator() {
   $session = CRM_Core_Session::singleton();
-  $enhancedTags = pum_expert_my_cv_enhanced_tags::singleton();
-  $contact_id = $enhancedTags->get_sector_coordinator_id($session->get('userID'));
+  $sector_coordinators = pum_expert_my_cv_contact_segments::get_sector_coordinators($session->get('userID'));
   $output = '';
-  if ($contact_id) {
-    $output = civicrm_api3('Contact', 'getvalue', array('id' => $contact_id, 'return' => 'display_name'));
+  if ($sector_coordinators) {
+    $output = civicrm_api3('Contact', 'getvalue', array('id' => current($sector_coordinators), 'return' => 'display_name'));
   }
   return $output;
 }
