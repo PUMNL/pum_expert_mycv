@@ -796,8 +796,7 @@ function candidate_expert_cv_submit($form, &$form_state) {
     $case_params['status_id'] = $new_status_id;
     civicrm_api3('Case', 'create', $case_params);
   }
-
-  civicrm_api3('Cvmutation', 'post', array('contact_id' => $contact_id));
+  
   drupal_set_message(t('Your CV is successfully updated'));
   $form_state['redirect'] = 'portal';
 }
