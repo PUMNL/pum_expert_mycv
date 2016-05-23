@@ -40,8 +40,15 @@ class pum_expert_my_cv_contact_segments {
      */
     public static function get_sectors($contact_id) {
       $sectors = array();
-      $contact_segments = civicrm_api3('ContactSegment', 'Get',
-        array('contact_id' => $contact_id, 'is_active' => 1, 'role_value' => 'Expert'));
+
+      $params = array(
+        'contact_id' => $contact_id,
+        'is_active' => 1,
+        'role_value' => 'Expert',
+        'is_main' => 1,
+    );
+
+      $contact_segments = civicrm_api3('ContactSegment', 'Get', $params);
       foreach ($contact_segments['values'] as $contact_segment_id => $contact_segment) {
         $segment = civicrm_api3('Segment', 'Getsingle', array('id' => $contact_segment['segment_id']));
         if (empty($segment['parent_id'])) {
