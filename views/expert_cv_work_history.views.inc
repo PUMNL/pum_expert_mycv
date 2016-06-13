@@ -32,14 +32,16 @@ $handler->display->display_options['exposed_form']['type'] = 'basic';
 $handler->display->display_options['pager']['type'] = 'full';
 $handler->display->display_options['style_plugin'] = 'default';
 $handler->display->display_options['row_plugin'] = 'fields';
-/* Header: Global: Text area */
-$handler->display->display_options['header']['area']['id'] = 'area';
-$handler->display->display_options['header']['area']['table'] = 'views';
-$handler->display->display_options['header']['area']['field'] = 'area';
-$handler->display->display_options['header']['area']['empty'] = TRUE;
-$handler->display->display_options['header']['area']['content'] = '<div class="pumnet purple"><a href="/expert/cv-edit-workhistory/!1/add" class="pumnet button purple">Add workhistory</a></div>';
-$handler->display->display_options['header']['area']['format'] = 'filtered_html';
-$handler->display->display_options['header']['area']['tokenize'] = TRUE;
+/* Header: Global: PHP */
+$handler->display->display_options['header']['php']['id'] = 'php';
+$handler->display->display_options['header']['php']['table'] = 'views';
+$handler->display->display_options['header']['php']['field'] = 'php';
+$handler->display->display_options['header']['php']['empty'] = TRUE;
+$handler->display->display_options['header']['php']['php_output'] = '<?php
+$expert_id = reset($view->args);
+if (_pum_expert_cv_is_viewing_own_cv($view)) {
+echo \'<div class="pumnet purple"><a href="/expert/cv-edit-workhistory/\'.$expert_id.\'/add" class="pumnet button purple">Add workhistory</a></div>\';
+} ?>';
 /* Field: CiviCRM Custom: Workhistory: ID */
 $handler->display->display_options['fields']['id']['id'] = 'id';
 $handler->display->display_options['fields']['id']['table'] = $cgroup['table_name'];
@@ -133,7 +135,10 @@ $handler->display->display_options['fields']['php_1']['alter']['path'] = 'expert
 $handler->display->display_options['fields']['php_1']['alter']['absolute'] = TRUE;
 $handler->display->display_options['fields']['php_1']['element_label_colon'] = FALSE;
 $handler->display->display_options['fields']['php_1']['use_php_setup'] = 0;
-$handler->display->display_options['fields']['php_1']['php_value'] = 'return _pum_expert_mycv_get_previous_record_id($row->id_1, $row->id, "'.$cgroup['table_name'].'");';
+$handler->display->display_options['fields']['php_1']['php_value'] = 'if (_pum_expert_cv_is_viewing_own_cv($view)) {
+return _pum_expert_mycv_get_previous_record_id($row->id_1, $row->id, "'.$cgroup['table_name'].'");
+}
+return \'\';';
 $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
 $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
 /* Field: Global: PHP */
@@ -148,29 +153,48 @@ $handler->display->display_options['fields']['php']['alter']['path'] = 'expert/c
 $handler->display->display_options['fields']['php']['alter']['absolute'] = TRUE;
 $handler->display->display_options['fields']['php']['element_label_colon'] = FALSE;
 $handler->display->display_options['fields']['php']['use_php_setup'] = 0;
-$handler->display->display_options['fields']['php']['php_value'] = 'return _pum_expert_mycv_get_next_record_id($row->id_1, $row->id, "'.$cgroup['table_name'].'");';
+$handler->display->display_options['fields']['php_1']['php_value'] = 'if (_pum_expert_cv_is_viewing_own_cv($view)) {
+return _pum_expert_mycv_get_next_record_id($row->id_1, $row->id, "'.$cgroup['table_name'].'");
+}
+return \'\';';
 $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
 $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
 /* Field: Global: Custom text */
 $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
 $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
-$handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+$handler->display->display_options['fields']['nothing_1']['field'] = 'php';
 $handler->display->display_options['fields']['nothing_1']['label'] = '';
 $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Edit';
+$handler->display->display_options['fields']['nothing_1']['alter']['alter_text'] = TRUE;
 $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
 $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'expert/cv-edit-workhistory/[id_1]/[id]';
 $handler->display->display_options['fields']['nothing_1']['alter']['absolute'] = TRUE;
 $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['nothing_1']['use_php_setup'] = 0;
+$handler->display->display_options['fields']['nothing_1']['php_value'] = 'if (_pum_expert_cv_is_viewing_own_cv($view)) {
+return \'Edit\';
+}
+return \'\';';
+$handler->display->display_options['fields']['nothing_1']['use_php_click_sortable'] = '0';
+$handler->display->display_options['fields']['nothing_1']['php_click_sortable'] = '';
 /* Field: Global: Custom text */
 $handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
 $handler->display->display_options['fields']['nothing_2']['table'] = 'views';
-$handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
+$handler->display->display_options['fields']['nothing_2']['field'] = 'php';
 $handler->display->display_options['fields']['nothing_2']['label'] = '';
 $handler->display->display_options['fields']['nothing_2']['alter']['text'] = 'Remove';
+$handler->display->display_options['fields']['nothing_2']['alter']['alter_text'] = TRUE;
 $handler->display->display_options['fields']['nothing_2']['alter']['make_link'] = TRUE;
 $handler->display->display_options['fields']['nothing_2']['alter']['path'] = 'expert/cv-edit-workhistory/[id_1]/[id]/delete';
 $handler->display->display_options['fields']['nothing_2']['alter']['absolute'] = TRUE;
 $handler->display->display_options['fields']['nothing_2']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['nothing_2']['use_php_setup'] = 0;
+$handler->display->display_options['fields']['nothing_2']['php_value'] = 'if (_pum_expert_cv_is_viewing_own_cv($view)) {
+return \'Remove\';
+}
+return \'\';';
+$handler->display->display_options['fields']['nothing_2']['use_php_click_sortable'] = '0';
+$handler->display->display_options['fields']['nothing_2']['php_click_sortable'] = '';
 /* Contextual filter: CiviCRM Contacts: Contact ID */
 $handler->display->display_options['arguments']['id']['id'] = 'id';
 $handler->display->display_options['arguments']['id']['table'] = 'civicrm_contact';

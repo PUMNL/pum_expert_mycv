@@ -80,6 +80,22 @@ function _pum_expert_cv_form_date_value($value) {
   );
 }
 
+function _pum_expert_cv_is_viewing_own_cv($view) {
+  global $user;
+  $expert_id = reset($view->args);
+  if (!empty($expert_id)) {
+    try {
+      $expert_id = civicrm_api3('UFMatch', 'getvalue', array('contact_id' => $expert_id, 'return' => 'uf_id'));
+    } catch (Exception $e) {
+      $expert_id = false;
+    }
+  }
+  if (!empty($expert_id) && $expert_id == $user->uid) {
+    return true;
+  }
+  return false;
+}
+
 function _pum_expert_cv_form_date_submitted_string_value($value) {
   $date = new DateTime($value);
   return $date->format('Ymd');
