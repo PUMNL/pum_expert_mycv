@@ -109,17 +109,6 @@ $handler->display->display_options['fields']['reason_expert_status_126']['hide_e
 $handler->display->display_options['fields']['reason_expert_status_126']['empty_zero'] = TRUE;
 $handler->display->display_options['fields']['reason_expert_status_126']['element_label_type'] = 'strong';
 $handler->display->display_options['fields']['reason_expert_status_126']['element_label_colon'] = FALSE;
-/* Field: Restrictions */
-$handler->display->display_options['fields']['view_restrictions']['id'] = 'view_restrictions';
-$handler->display->display_options['fields']['view_restrictions']['table'] = 'views';
-$handler->display->display_options['fields']['view_restrictions']['field'] = 'view';
-$handler->display->display_options['fields']['view_restrictions']['ui_name'] = 'Restrictions';
-$handler->display->display_options['fields']['view_restrictions']['label'] = 'Restrictions';
-$handler->display->display_options['fields']['view_restrictions']['element_label_type'] = 'h2';
-$handler->display->display_options['fields']['view_restrictions']['element_label_colon'] = FALSE;
-$handler->display->display_options['fields']['view_restrictions']['hide_empty'] = TRUE;
-$handler->display->display_options['fields']['view_restrictions']['view'] = 'expert_cv_restrictions';
-$handler->display->display_options['fields']['view_restrictions']['arguments'] = '[id]';
 /* Field: Global: PHP */
 $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
 $handler->display->display_options['fields']['php_1']['table'] = 'views';
