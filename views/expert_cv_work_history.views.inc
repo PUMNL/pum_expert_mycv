@@ -142,23 +142,23 @@ return \'\';';
 $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '0';
 $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
 /* Field: Global: PHP */
-$handler->display->display_options['fields']['php']['id'] = 'php';
-$handler->display->display_options['fields']['php']['table'] = 'views';
-$handler->display->display_options['fields']['php']['field'] = 'php';
-$handler->display->display_options['fields']['php']['label'] = '';
-$handler->display->display_options['fields']['php']['alter']['alter_text'] = TRUE;
-$handler->display->display_options['fields']['php']['alter']['text'] = 'Move down';
-$handler->display->display_options['fields']['php']['alter']['make_link'] = TRUE;
-$handler->display->display_options['fields']['php']['alter']['path'] = 'expert/cv-edit-workhistory/[id_1]/[id]/switch/[php]';
-$handler->display->display_options['fields']['php']['alter']['absolute'] = TRUE;
-$handler->display->display_options['fields']['php']['element_label_colon'] = FALSE;
-$handler->display->display_options['fields']['php']['use_php_setup'] = 0;
-$handler->display->display_options['fields']['php_1']['php_value'] = 'if (_pum_expert_cv_is_viewing_own_cv($view)) {
+$handler->display->display_options['fields']['php_2']['id'] = 'php_2';
+$handler->display->display_options['fields']['php_2']['table'] = 'views';
+$handler->display->display_options['fields']['php_2']['field'] = 'php';
+$handler->display->display_options['fields']['php_2']['label'] = '';
+$handler->display->display_options['fields']['php_2']['alter']['alter_text'] = TRUE;
+$handler->display->display_options['fields']['php_2']['alter']['text'] = 'Move down';
+$handler->display->display_options['fields']['php_2']['alter']['make_link'] = TRUE;
+$handler->display->display_options['fields']['php_2']['alter']['path'] = 'expert/cv-edit-workhistory/[id_1]/[id]/switch/[php_2]';
+$handler->display->display_options['fields']['php_2']['alter']['absolute'] = TRUE;
+$handler->display->display_options['fields']['php_2']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['php_2']['use_php_setup'] = 0;
+$handler->display->display_options['fields']['php_2']['php_value'] = 'if (_pum_expert_cv_is_viewing_own_cv($view)) {
 return _pum_expert_mycv_get_next_record_id($row->id_1, $row->id, "'.$cgroup['table_name'].'");
 }
 return \'\';';
-$handler->display->display_options['fields']['php']['use_php_click_sortable'] = '0';
-$handler->display->display_options['fields']['php']['php_click_sortable'] = '';
+$handler->display->display_options['fields']['php_2']['use_php_click_sortable'] = '0';
+$handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
 /* Field: Global: Custom text */
 $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
 $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
