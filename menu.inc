@@ -28,9 +28,9 @@ function pum_expert_mycv_menu() {
     'title' => t('Edit workhistory'),
     'description' => '',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('expert_cv_workhistory', 2, 3),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'page arguments' => array('expert_cv_workhistory', 2, 3), //arg 2 is contact id, arg 3 is work history id
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2),
     'file' => 'form/workhistory.inc',
   );
 
@@ -38,9 +38,9 @@ function pum_expert_mycv_menu() {
     'title' => t('Remove workhistory'),
     'description' => '',
     'page callback' => 'expert_cv_workhistory_remove',
-    'page arguments' => array(2, 3),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'page arguments' => array(2, 3), //arg 2 is contact id, arg 3 is work history id
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2),
     'file' => 'form/workhistory.inc',
   );
 
@@ -49,8 +49,8 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'expert_cv_workhistory_switch',
     'page arguments' => array(2, 3,5),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/workhistory.inc',
   );
 
@@ -59,8 +59,8 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('expert_cv_workhistory', 2),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/workhistory.inc',
   );
 
@@ -69,8 +69,8 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('expert_cv_education', 2, 3),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/education.inc',
   );
 
@@ -79,8 +79,8 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'expert_cv_education_remove',
     'page arguments' => array(2, 3),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/education.inc',
   );
 
@@ -89,8 +89,8 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'expert_cv_education_switch',
     'page arguments' => array(2, 3,5),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/education.inc',
   );
 
@@ -99,12 +99,30 @@ function pum_expert_mycv_menu() {
     'description' => '',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('expert_cv_education', 2),
-    'access callback' => '_pum_expert_mycv_user_has_role',
-    'access arguments' => array(array('Expert', 'Candidate expert')), // arg 1 loads the user, arg 2 is the role name
+    'access callback' => '_pum_expert_mycv_user_is_current_contact',
+    'access arguments' => array(2), // arg 1 loads the user, arg 2 is the role name
     'file' => 'form/education.inc',
   );
 
   return $items;
+}
+
+/**
+ * Returns true when a user has a role on the case.
+ *
+ * @param $case_id
+ * @return bool
+ */
+function _pum_expert_mycv_user_is_current_contact($cid) {
+  civicrm_initialize();
+  $session = CRM_Core_Session::singleton();
+  $contact_id = $session->get('userID');
+
+  if ($contact_id == $cid) {
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 function _pum_expert_mycv_user_has_role($roles = array()) {
