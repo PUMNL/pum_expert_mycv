@@ -36,7 +36,7 @@ function candidate_expert_cv_validate($form, &$form_state) {
 }
 
 function candidate_expert_cv_get_form_count() {
-  return 5;
+  return 4;
 }
 
 function candidate_expert_cv_get_form(&$form_state, $current_step, $step_count) {
@@ -52,9 +52,6 @@ function candidate_expert_cv_get_form(&$form_state, $current_step, $step_count) 
       break;
     case 3:
       return pum_expert_mycv_workhistory_form($form_state, 'candidate_expert_cv');
-      break;
-    case 4:
-      return candidate_expert_cv_code_of_conduct($form_state);
       break;
   }
 
@@ -134,53 +131,6 @@ function candidate_expert_cv_next($form, &$form_state) {
   $form_state['next'] = true;
   $form_state['previous'] = false;
   $form_state['rebuild'] = TRUE;
-}
-
-function candidate_expert_cv_code_of_conduct(&$form_state) {
-  $form = array();
-
-  $form['code_of_conduct']['#type'] = 'fieldset';
-  $form['code_of_conduct']['#title'] = t('PUM Code of Conduct');
-
-  $form['code_of_conduct']['info'] = array(
-    '#type' => 'markup',
-    '#markup' => t('PUM sets high standards as regard honesty, integrity and mutual respect for people and the environment. Our code of Conduct is described in the publication: ').'<a href="/code-conduct" target="_blank">Leidraad voor Experts</a>. '.t('In order to join PUM as an expert we ask you to agree with our code of conduct by ticking the checkbox below. Once you have entered all your details (in English), please send this form to PUM by clicking the submit button. ')
-  );
-
-  $form['code_of_conduct']['code_of_conduct'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('I agree to the Code of Conduct'),
-  );
-
-  $form['privacy_scheme_agree']['#type'] = 'fieldset';
-  $form['privacy_scheme_agree']['#title'] = t('PUM Privacy Scheme');
-
-  $form['privacy_scheme_agree']['privacy_scheme_info'] = array(
-    '#type' => 'markup',
-    '#markup' => 'by ticking the checkbox below, I agree with the inclusion of my data in the PUM ICT system and am familiar with <a href="/share-knowledge/pum-privacy-scheme" target="_blank">PUM\'s Privacy Policy</a>',
-  );
-
-  $form['privacy_scheme_agree']['privacy_scheme'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('PUM privacy scheme'),
-  );
-
-  $form['description'] = array(
-    '#type' => 'markup',
-    '#markup' => '<p>Make sure you have checked all your details before submitting this form.</p>',
-  );
-
-  $form['previous']['#type'] = 'submit';
-  $form['previous']['#value'] = t('Previous');
-  $form['previous']['#submit'] = array('candidate_expert_cv_previous');
-  $form['previous']['#limit_validation_errors'] = array();
-  $form['previous']['#validate'] = array();
-
-  $form['next']['#type'] = 'submit';
-  $form['next']['#value'] = t('Submit');
-  $form['next']['#validate'][] ='candidate_expert_cv_validate_code_of_conduct';
-
-  return array('form' => $form, 'title' => t('Code of conduct'));
 }
 
 function candidate_expert_cv_additional_details(&$form_state) {
@@ -796,7 +746,7 @@ function candidate_expert_cv_submit($form, &$form_state) {
     $case_params['status_id'] = $new_status_id;
     civicrm_api3('Case', 'create', $case_params);
   }
-  
+
   drupal_set_message(t('Your CV is successfully updated'));
   $form_state['redirect'] = 'portal';
 }

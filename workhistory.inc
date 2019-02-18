@@ -166,8 +166,7 @@ function pum_expert_mycv_workhistory_form(&$form_state, $name) {
   $form['previous']['#validate'] = array();
 
   $form['next']['#type'] = 'submit';
-  $form['next']['#value'] = t('Next');
-  $form['next']['#submit'] = array($name.'_next');
+  $form['next']['#value'] = t('Submit');
   $form['next']['#validate'] = array($name.'_validate');
 
   return array('form' => $form, 'title' => t('Workhistory'));
