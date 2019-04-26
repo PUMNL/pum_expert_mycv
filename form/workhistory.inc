@@ -271,7 +271,7 @@ function _expert_mycv_workhistory_save($contact_id, $id, $data) {
   $workhistory_params[$fields['Description'].':'.$key] = $data['workhistory_description'];
   $workhistory_params[$fields['Competences_used_in_this_job'].':'.$key] = $data['workhistory_competences'];
   $workhistory_params[$fields['Responsibilities'].':'.$key] = $data['workhistory_responsibilities'];
-  $workhistory_params[$fields['Countries_visited_in_relation_to_the_job'].':'.$key] = reset($data['workhistory_countries_visited']); //only save first first one
+  $workhistory_params[$fields['Countries_visited_in_relation_to_the_job'].':'.$key] = is_array($data['workhistory_countries_visited'])?reset($data['workhistory_countries_visited']):$data['workhistory_countries_visited']; //only save first first one
 
   civicrm_api3('Cvmutation', 'pre', array('contact_id' => $contact_id));
   if (count($workhistory_params)) {
