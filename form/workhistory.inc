@@ -206,7 +206,7 @@ function expert_cv_workhistory_switch($contact_id, $id_1, $id_2) {
   } elseif (in_array("Candidate expert", $user->roles)) {
     drupal_goto('portal');
   } else {
-    drupal_goto('portal');
+    drupal_goto('expert/my-cv');
   }
 }
 
