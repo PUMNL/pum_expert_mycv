@@ -447,12 +447,23 @@ function candidate_expert_cv_contact_details(&$form_state) {
 
   $form['contact_information']['email'] = array(
     '#type' => 'textfield',
-    '#title' => t('E-mail address'),
+    '#title' => t('Home e-mail address'),
     '#default_value' => pum_expert_mycv_value($values, $contact['email'], 'email', 'email'),
     '#rules' => array(
       'email',
     ),
     '#required' => true,
+  );
+
+  $form['contact_information']['work_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('PUM e-mail address (this cannot be changed, but is displayed for reference)'),
+    '#default_value' => pum_expert_mycv_value($values, $contact['work_email'], 'email', 'email'),
+    '#rules' => array(
+      'email',
+    ),
+    '#required' => false,
+    '#disabled' => true,
   );
 
   $form['passport']['#type'] = 'fieldset';
@@ -710,13 +721,25 @@ function candidate_expert_cv_submit($form, &$form_state) {
   if (!empty($form_state['storedvalues'][0]['email'])) {
     $email['email'] = $form_state['storedvalues'][0]['email'];
     $email['contact_id'] = $contact['id'];
-    $email['is_primary'] = 1;
+    $email['is_primary'] = 0;
     if ($original_contact['email']['id']) {
       $email['id'] = $original_contact['email']['id'];
     }
     civicrm_api3('Email', 'create', $email);
   } elseif ($original_contact['email']['id']) {
     civicrm_api3('Email', 'delete', array('id' => $original_contact['email']['id']));
+  }
+
+  if (!empty($form_state['storedvalues'][0]['work_email'])) {
+    $email['email'] = $form_state['storedvalues'][0]['work_email'];
+    $email['contact_id'] = $contact['id'];
+    $email['is_primary'] = 1;
+    if ($original_contact['work_email']['id']) {
+      $email['id'] = $original_contact['work_email']['id'];
+    }
+    civicrm_api3('Email', 'create', $email);
+  } elseif ($original_contact['work_email']['id']) {
+    civicrm_api3('Email', 'delete', array('id' => $original_contact['work_email']['id']));
   }
 
   //update education

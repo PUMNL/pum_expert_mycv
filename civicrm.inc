@@ -28,6 +28,7 @@ function pum_expert_mycv_get_civi_contact() {
   //get address info
   $home_address = array();
   $home_loc = civicrm_api3('LocationType', 'getvalue', array('return' => 'id', 'name' => 'Home'));
+  $work_loc = civicrm_api3('LocationType', 'getvalue', array('return' => 'id', 'name' => 'Work'));
   try {
     $home_address = civicrm_api3('Address', 'getsingle', array(
       'contact_id' => $contact['id'],
@@ -82,14 +83,32 @@ function pum_expert_mycv_get_civi_contact() {
   $contact['fax'] = $fax;
 
   try {
-    $email = civicrm_api3('Email', 'getsingle', array('contact_id' => $contact['id'], 'is_primary' => 1));
+    $email = civicrm_api3('Email', 'get', array('contact_id' => $contact['id'], 'location_type_id' => $home_loc));
+    foreach($email['values'] as $key => $mailaddress) {
+      if($mailaddress['location_type_id'] == $home_loc){
+        $home_email = $mailaddress;
+      }
+    }
   } catch (Exception $e) {
-    $email['id'] = false;
-    $email['email'] = '';
-    $email['location_type_id'] = $home_loc;
+    $home_email['id'] = false;
+    $home_email['email'] = '';
+    $home_email['location_type_id'] = $home_loc;
   }
-  $contact['email'] = $email;
+  $contact['email'] = $home_email;
 
+  try {
+    $work_email = civicrm_api3('Email', 'get', array('contact_id' => $contact['id'], 'location_type_id' => $work_loc));
+    foreach($work_email['values'] as $key => $mailaddress) {
+      if($mailaddress['location_type_id'] == $work_loc){
+        $work_email = $mailaddress;
+      }
+    }
+  } catch (Exception $e) {
+    $work_email['id'] = false;
+    $work_email['email'] = '';
+    $work_email['location_type_id'] = $work_loc;
+  }
+  $contact['work_email'] = $work_email;
 
   return $contact;
 }
